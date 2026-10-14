@@ -1,0 +1,6 @@
+strategy,evaluations,questions,correct,trajectory_records,token_id_records,greedy_round_records
+random,150,150,83,150,150,0
+left_to_right,150,150,121,150,150,0
+right_to_left,150,150,58,150,150,0
+confidence,150,150,77,150,150,0
+influence,150,150,97,150,150,150

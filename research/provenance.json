@@ -1,0 +1,110 @@
+{
+  "phase1_config": {
+    "model": {
+      "name": "GSAI-ML/LLaDA-8B-Instruct",
+      "revision": "852152c60bdfed4632635bfcf3e83408ad3f65bf",
+      "dtype": "bfloat16"
+    },
+    "dataset": {
+      "name": "openai/gsm8k",
+      "subset": "main",
+      "split": "test",
+      "revision": "main",
+      "num_questions": 150
+    },
+    "seed": 42,
+    "decoding": {
+      "gen_length": 256,
+      "steps": 256,
+      "block_length": 256,
+      "mask_id": 126336,
+      "influence_top_k": 8
+    },
+    "prompt_suffix": "\nSolve this problem step by step. End with '#### <final numerical answer>'.",
+    "output_dir": "outputs/phase1"
+  },
+  "model_revision": "852152c60bdfed4632635bfcf3e83408ad3f65bf",
+  "dataset_revision": "740312add88f781978c0658806c59bc2815b9866",
+  "phase1_source_sha256": {
+    "run_experiment.py": "8442c53642979e0c25e0b0be9a589efaa344192c09c4d11770895e9c4604913a",
+    "samplers.py": "c1aee8fb4dd0edf5a1fde15b5f00e61c11e403f7a60fa45be68714a2cebd0927",
+    "evaluation.py": "154db29bbca4b53d4101725c0fd5581ad4d0091fc564204f3667e98ffe3196b6",
+    "analyze_results.py": "5f8d7f377f86c8bea960b4bb52d1cee521ec3442107777eed782e97d8ff86d2d"
+  },
+  "phase1_input_sha256": {
+    "records.jsonl": "c4d64404cb585aaa3852d57c82fce08dc0b57fdfc5ed8ad30435d6b8517bb664",
+    "questions.json": "038320bfd12122d6e2223c1860ee8f084d55c3681b549ca5893d0131fe70e09d",
+    "results.csv": "bfdf182de0e054270bcc35efb8d8effef6bda0f0e598a1d6a174db1fff9a020b",
+    "manifest.json": "6a425d4e6eddc9c1ec2ed50da0e562678f37701a88e6a8618c368fd187704da5"
+  },
+  "analysis_settings": {
+    "seed": 42,
+    "bootstrap_repetitions": 10000,
+    "complexity_bins": {
+      "calculation_count": [
+        [
+          0,
+          2,
+          "0\u20132"
+        ],
+        [
+          3,
+          4,
+          "3\u20134"
+        ],
+        [
+          5,
+          null,
+          "5+"
+        ]
+      ],
+      "question_words": [
+        [
+          0,
+          40,
+          "0\u201340"
+        ],
+        [
+          41,
+          70,
+          "41\u201370"
+        ],
+        [
+          71,
+          null,
+          "71+"
+        ]
+      ],
+      "numeric_mentions": [
+        [
+          0,
+          3,
+          "0\u20133"
+        ],
+        [
+          4,
+          6,
+          "4\u20136"
+        ],
+        [
+          7,
+          null,
+          "7+"
+        ]
+      ]
+    },
+    "special_token_ids": {},
+    "numpy_version": "2.0.2",
+    "matplotlib_version": "3.9.4"
+  },
+  "original_analysis_script_sha256": "6cc9a10b6609c0e64ea5e7c6d45e720df8d42a98e75acd8a3ee50547c2e012ee",
+  "checkpoint_analysis_script_sha256": "d97ecf0ae43462fe8376519ae7c67c11b53fd3d8229f0cc17434f8a643a9397b",
+  "observed_questions": 150,
+  "observed_evaluations": 750,
+  "notes": [
+    "Output directory sanitized; original manifest and machine environment logs excluded.",
+    "Input hashes refer to original private artifacts, including the unsanitized manifest.",
+    "Changing paths or timestamps changes manifest hashes, not scientific results.",
+    "Public CSV copies use LF line endings; cells and numerical values are unchanged."
+  ]
+}

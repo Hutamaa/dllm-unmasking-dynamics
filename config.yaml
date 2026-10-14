@@ -1,0 +1,19 @@
+model:
+  name: GSAI-ML/LLaDA-8B-Instruct
+  revision: 852152c60bdfed4632635bfcf3e83408ad3f65bf
+  dtype: bfloat16
+dataset:
+  name: openai/gsm8k
+  subset: main
+  split: test
+  revision: main  # resolved to an immutable SHA on first run
+  num_questions: 150
+seed: 42
+decoding:
+  gen_length: 256
+  steps: 256
+  block_length: 256
+  mask_id: 126336
+  influence_top_k: 8  # confidence-prefilter approximation; null evaluates every eligible candidate
+prompt_suffix: "\nSolve this problem step by step. End with '#### <final numerical answer>'."
+output_dir: outputs/phase1

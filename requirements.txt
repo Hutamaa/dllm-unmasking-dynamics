@@ -1,0 +1,7 @@
+# Install the CUDA-enabled torch wheel separately (see README).
+transformers==4.38.2
+datasets==3.6.0
+huggingface-hub==0.30.2
+accelerate==1.6.0
+PyYAML==6.0.2
+matplotlib==3.10.1

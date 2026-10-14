@@ -1,0 +1,10 @@
+proxy,strategy_a,strategy_b,n_questions,pearson_proxy_vs_paired_gap,permutation_p,holm_adjusted_p
+calculation_count,left_to_right,right_to_left,150,0.31920854541569993,9.999000099990002e-05,0.0008999100089991002
+calculation_count,influence,random,150,0.14490769384863011,0.08209179082091791,0.5746425357464254
+calculation_count,influence,confidence,150,0.06306562238868912,0.48755124487551244,1.0
+question_words,left_to_right,right_to_left,150,0.24165511646604557,0.0038996100389961006,0.031196880311968805
+question_words,influence,random,150,0.0704698507441057,0.39276072392760725,1.0
+question_words,influence,confidence,150,0.02399663785623137,0.777922207779222,1.0
+numeric_mentions,left_to_right,right_to_left,150,0.14098544004374647,0.09009099090090991,0.5746425357464254
+numeric_mentions,influence,random,150,0.08483891726953026,0.298970102989701,1.0
+numeric_mentions,influence,confidence,150,0.05552451107603234,0.5065493450654934,1.0
