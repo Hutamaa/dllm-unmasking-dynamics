@@ -42,3 +42,8 @@ run*.local.pbs
 *.zip
 *.prof
 .ipynb_checkpoints/
+
+# Local package build metadata (editable install).
+*.egg-info/
+build/
+dist/

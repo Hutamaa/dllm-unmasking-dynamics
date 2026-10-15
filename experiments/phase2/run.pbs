@@ -1,0 +1,25 @@
+#!/bin/bash
+#PBS -N llada-phase2
+#PBS -q gpu_bwp6000
+#PBS -A YOUR_PHASE1_PROJECT_CODE
+#PBS -l select=1:ncpus=4:mem=64gb:ngpus=1
+#PBS -l walltime=24:00:00
+#PBS -j oe
+
+set -euo pipefail
+cd "${PBS_O_WORKDIR:?Submit from the repository directory}"
+# Set these to the existing Phase 1 environment and cache; never build/download here.
+if [[ -n "${CONDA_MODULE:-}" ]]; then module load "$CONDA_MODULE"; fi
+source "${CONDA_BASE:-$HOME/miniconda3}/etc/profile.d/conda.sh"
+conda activate "${LLADA_ENV:-llada-phase1}"
+: "${HF_HOME:?Set HF_HOME to the existing Phase 1 cache}"
+export HF_HOME
+export HF_HUB_OFFLINE=1 HF_DATASETS_OFFLINE=1 TRANSFORMERS_OFFLINE=1
+export OMP_NUM_THREADS=4 TOKENIZERS_PARALLELISM=false CUBLAS_WORKSPACE_CONFIG=:4096:8
+mkdir -p outputs/phase2/logs
+exec > >(tee -a "outputs/phase2/logs/job-${PBS_JOBID}.log") 2>&1
+args=(--config configs/phase2.yaml)
+if [[ -n "${GSM8K_TEST_PARQUET:-}" ]]; then args+=(--dataset-parquet "$GSM8K_TEST_PARQUET"); fi
+# File-only preflight: no model loading, inference, pilot, or smoke test.
+python -u -m experiments.phase2.run "${args[@]}" --check-cache
+python -u -m experiments.phase2.run "${args[@]}"

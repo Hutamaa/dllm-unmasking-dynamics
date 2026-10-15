@@ -1,0 +1,25 @@
+#!/bin/bash
+#PBS -N llada-phase1
+#PBS -q gpu_bwp6000
+#PBS -A YOUR_PROJECT_CODE
+#PBS -l select=1:ncpus=4:mem=64gb:ngpus=1
+#PBS -l walltime=24:00:00
+#PBS -j oe
+
+set -euo pipefail
+cd "${PBS_O_WORKDIR:?Submit from the repository directory}"
+# Fill this with a Python/Conda module listed by `module avail` on WildFly.
+# Leave empty if your own Miniconda installation supplies the environment.
+CONDA_MODULE="${CONDA_MODULE:-}"
+if [[ -n "$CONDA_MODULE" ]]; then
+    module load "$CONDA_MODULE"
+fi
+CONDA_BASE="${CONDA_BASE:-$HOME/miniconda3}"
+source "$CONDA_BASE/etc/profile.d/conda.sh"
+conda activate "${LLADA_ENV:-llada-phase1}"
+export OMP_NUM_THREADS=4
+export TOKENIZERS_PARALLELISM=false
+export CUBLAS_WORKSPACE_CONFIG=:4096:8
+# Set HF_HOME to a sufficiently large shared/scratch directory before submitting.
+nvidia-smi
+python -u -m experiments.phase1.run --config "${EXPERIMENT_CONFIG:-configs/phase1.yaml}"

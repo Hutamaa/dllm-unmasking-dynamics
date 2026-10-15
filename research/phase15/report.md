@@ -194,7 +194,7 @@ The following are proposed tests, not conclusions established by this analysis:
 
 ## Reproduction
 
-`python analyze_phase15.py --input-dir outputs/phase1 --output-dir results/phase15`
+`python -m dllm_unmasking.analyze_phase15 --input-dir outputs/phase1 --output-dir results/phase15`
 
 Outputs are separate from Phase 1. `../provenance.json` records source-file hashes, input hashes, analysis settings, package versions, and token-ID mappings. Only the three PNGs are generated: complexity gaps, reveal dynamics, and influence diagnostics.
 

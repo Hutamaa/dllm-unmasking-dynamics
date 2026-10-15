@@ -1,3 +1,5 @@
+> For the reorganized checkout, install the editable package first as described in the [current reproduction guide](REPRODUCIBILITY.md). Commands below use the current module paths.
+
 > Historical Phase 1/1.5 checkpoint documentation. Its implementation-status statements describe that checkpoint; see the [current overview](../README.md) and [canonical report](../reports/phase7/PHASE7_REPORT.md) for completed later phases. Commands below run from the repository root.
 
 # Phase 1: Unmasking strategies in LLaDA
@@ -49,7 +51,7 @@ load_dataset('openai/gsm8k', 'main', split='test')
 PY
 ```
 
-For a fully offline first run, replace dataset `revision: main` in `config.yaml`
+For a fully offline first run, replace dataset `revision: main` in `configs/phase1.yaml`
 with the downloaded dataset's commit SHA, and set `HF_HUB_OFFLINE=1` and
 `HF_DATASETS_OFFLINE=1`. Full commit SHAs avoid online revision-resolution calls.
 Download the dataset with that same SHA (pass `revision=...` to `load_dataset`)
@@ -57,7 +59,7 @@ to ensure the matching dataset cache is populated before submitting offline.
 
 ## Submission
 
-Edit `run.pbs`: replace `YOUR_PROJECT_CODE`; set `CONDA_BASE` to the actual Conda
+Edit `experiments/phase1/run.pbs`: replace `YOUR_PROJECT_CODE`; set `CONDA_BASE` to the actual Conda
 installation and optionally `CONDA_MODULE` to an available site module. Its
 allocation requests queue `gpu_bwp6000`, one GPU, four CPUs, 64 GB RAM, and 24 hours.
 Confirm the site's GPU resource name (`ngpus`) and permitted walltime if PBS
@@ -66,20 +68,20 @@ rejects the request. No cluster job has been submitted by this implementation.
 From this repository on WildFly:
 
 ```bash
-qsub run.pbs
+qsub experiments/phase1/run.pbs
 ```
 
 Set cache/module/environment overrides through PBS if needed:
 
 ```bash
-qsub -v CONDA_BASE=/path/to/conda,LLADA_ENV=llada-phase1,HF_HOME=/path/to/cache run.pbs
+qsub -v CONDA_BASE=/path/to/conda,LLADA_ENV=llada-phase1,HF_HOME=/path/to/cache experiments/phase1/run.pbs
 ```
 
 Within a PBS GPU allocation the underlying command is
-`python -u run_experiment.py --config config.yaml`. The runner requires
+`python -u -m experiments.phase1.run --config configs/phase1.yaml`. The runner requires
 `PBS_JOBID` and a CUDA GPU to help prevent login-node inference. For an initial
 GPU smoke run, copy the config, set `num_questions: 2` and a different
-`output_dir`, then submit with `qsub -v EXPERIMENT_CONFIG=smoke.yaml run.pbs`.
+`output_dir`, then submit with `qsub -v EXPERIMENT_CONFIG=smoke.yaml experiments/phase1/run.pbs`.
 Run the full 150-question experiment after reviewing its real outputs.
 
 ## Controlled decoding
@@ -214,7 +216,7 @@ interrupted question may leave different strategy counts; use paired accuracy
 until the run completes. Rebuild tables/plots on a CPU without loading the model:
 
 ```bash
-python analyze_results.py outputs/phase1
+python -m dllm_unmasking.analyze_results outputs/phase1
 ```
 
 ## Completed Phase 1 and Phase 1.5 checkpoint
@@ -247,7 +249,7 @@ Phase 2 has not been implemented.
 
 ### Reproduce Phase 1 raw results
 
-Use the Linux/PBS setup above. `run.pbs` is a reviewed public template with a
+Use the Linux/PBS setup above. `experiments/phase1/run.pbs` is a reviewed public template with a
 funding-code placeholder, optional site module, and generic Conda variables;
 no account credentials or fixed personal paths are included. Copy it to a local
 operational file if needed and fill in your environment settings before submission.
@@ -256,7 +258,7 @@ No submission is performed by preparing this checkpoint.
 The completed run used model revision
 `852152c60bdfed4632635bfcf3e83408ad3f65bf` and GSM8K dataset revision
 `740312add88f781978c0658806c59bc2815b9866`, subset `main`, split `test`.
-Copy `config.yaml` to an ignored location such as `outputs/reproduce.yaml`, set
+Copy `configs/phase1.yaml` to an ignored location such as `outputs/reproduce.yaml`, set
 `dataset.revision` to that dataset SHA, and use a fresh `output_dir`.
 Keep seed **42**, 150 questions, BF16, 256 response tokens, 256 steps, one
 256-token block, MASK ID 126336, and influence top-K **8**. All strategies use
@@ -264,7 +266,7 @@ the same prompt suffix, deterministic argmax predictions, and irreversible
 reveals. Random position selection uses seed 42 plus the dataset question ID.
 
 ```bash
-qsub -v EXPERIMENT_CONFIG=outputs/reproduce.yaml run.pbs
+qsub -v EXPERIMENT_CONFIG=outputs/reproduce.yaml experiments/phase1/run.pbs
 ```
 
 The runner generates `records.jsonl`, `questions.json`, `results.csv`,
@@ -279,7 +281,7 @@ Only NumPy and Matplotlib are needed; neither Torch nor model downloads are used
 
 ```bash
 python -m pip install numpy==2.0.2 matplotlib==3.9.4
-python analyze_phase15.py --input-dir /path/to/private/phase1 --output-dir results/phase15 --seed 42 --bootstrap-repetitions 10000
+python -m dllm_unmasking.analyze_phase15 --input-dir /path/to/private/phase1 --output-dir results/phase15 --seed 42 --bootstrap-repetitions 10000
 ```
 
 Those versions match the completed offline analysis. The portable default input

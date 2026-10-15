@@ -190,7 +190,7 @@ records; raw texts and environment logs remain excluded from Git.
 Regenerate public summaries and three figures into a separate directory:
 
 ```bash
-python analyze_phase7.py --output-dir results/phase7_reproduced
+python -m dllm_unmasking.analyze_phase7 --output-dir results/phase7_reproduced
 ```
 
 This uses only the tracked per-question table and selection index. Figure styling

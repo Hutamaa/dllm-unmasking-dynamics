@@ -81,8 +81,10 @@ python -m venv .venv
 source .venv/bin/activate
 python -m pip install torch==2.7.1
 python -m pip install -r requirements-analysis.txt
-OMP_NUM_THREADS=1 python tools/check_cpu.py
-python analyze_phase7.py --output-dir results/phase7_reproduced
+python -m pip install --upgrade pip setuptools wheel
+python -m pip install --no-deps --no-build-isolation -e .
+OMP_NUM_THREADS=1 python scripts/check_cpu.py
+python -m dllm_unmasking.analyze_phase7 --output-dir results/phase7_reproduced
 ```
 
 The CPU command runs fixture tests and explicitly skips artifact-dependent tests;
@@ -107,9 +109,9 @@ available at the configured paths:
 ```bash
 export HF_HOME="$SCRATCH_DIR/huggingface"
 export HF_HUB_OFFLINE=1 HF_DATASETS_OFFLINE=1 TRANSFORMERS_OFFLINE=1
-python run_phase6.py --check-cache
+python -m experiments.phase6.run --check-cache
 # Within a PBS GPU allocation; this command performs inference:
-python run_phase6.py --policy left_to_right
+python -m experiments.phase6.run --policy left_to_right
 ```
 
 This is an example of the runner interface, not a command that works from an empty
@@ -120,16 +122,18 @@ first. No downloads or job submissions are performed by the CPU quick start.
 
 | Area | Entry points |
 | --- | --- |
-| Canonical results | [Phase 7 report](reports/phase7/PHASE7_REPORT.md), [per-question data](reports/phase7/unified_per_question.csv), [regeneration](analyze_phase7.py) |
-| Phase 1 / 1.5 | [Historical methodology](docs/PHASE1.md), [offline report](research/phase15/report.md), [sampler](samplers.py) |
-| Phase 2 / 2.5 | [Parallel benchmark](PHASE2.md), [diagnosis](analyze_phase25.py), [manual audit](prepare_ltr_audit.py) |
-| Phase 3 | [Spaced schedule](PHASE3.md), [schedule definition](phase3_schedule.py) |
-| Phases 4 / 5 | [Spaced revision](PHASE4.md), [confidence revision](PHASE5.md) |
-| Phase 6 | [Matched sequential benchmark](PHASE6.md), [runner](run_phase6.py), [analysis](analyze_phase6.py) |
-| Evaluation / tests | [Unchanged extractor](evaluation.py), [test guide](docs/REPRODUCIBILITY.md#cpu-tests), [dependency map](docs/PROJECT_MAP.md) |
+| Canonical results | [Phase 7 report](reports/phase7/PHASE7_REPORT.md), [per-question data](reports/phase7/unified_per_question.csv), [regeneration](src/dllm_unmasking/analyze_phase7.py) |
+| Phase 1 / 1.5 | [Historical methodology](docs/PHASE1.md), [offline report](research/phase15/report.md), [sampler](src/dllm_unmasking/samplers.py) |
+| Phase 2 / 2.5 | [Parallel benchmark](experiments/phase2/README.md), [diagnosis](src/dllm_unmasking/analyze_phase25.py), [manual audit](src/dllm_unmasking/prepare_ltr_audit.py) |
+| Phase 3 | [Spaced schedule](experiments/phase3/README.md), [schedule definition](src/dllm_unmasking/phase3_schedule.py) |
+| Phases 4 / 5 | [Spaced revision](experiments/phase4/README.md), [confidence revision](experiments/phase5/README.md) |
+| Phase 6 | [Matched sequential benchmark](experiments/phase6/README.md), [runner](experiments/phase6/run.py), [analysis](src/dllm_unmasking/analyze_phase6.py) |
+| Evaluation / tests | [Unchanged extractor](src/dllm_unmasking/evaluation.py), [test guide](docs/REPRODUCIBILITY.md#cpu-tests), [dependency map](docs/PROJECT_MAP.md) |
 
-Scientific code stays at the root to preserve historical imports and provenance
-hashes. `reports/` and `research/` hold curated public results; `outputs/` and
+Scientific modules live in `src/dllm_unmasking/`; phase runners and PBS templates
+live in `experiments/`, with settings in `configs/` and CPU tests in `tests/`.
+[The layout guide](docs/STRUCTURE.md) maps every moved file and explains historical
+source-hash compatibility. `reports/` and `research/` hold curated public results; `outputs/` and
 `results/` hold ignored generated artifacts. Raw responses, trajectories, weights,
 environment logs, and credentials are excluded from Git.
 

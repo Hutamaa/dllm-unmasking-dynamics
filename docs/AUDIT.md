@@ -1,5 +1,7 @@
 # Repository cleanup, privacy and validation audit
 
+> The sections below record the earlier publication pass at `fa8971a`. The structural-refactor addendum at the end describes the current checkout; the earlier file inventory and unstaged-state statements are historical.
+
 Reviewed 15 October 2026. This is a local audit, not a certification that every
 possible secret format has been detected. No GPU inference, model downloads,
 HPC connections, submissions, commits, pushes or history rewriting were performed.
@@ -99,11 +101,11 @@ policy before publishing the cleanup.
 - New `docs/REPRODUCIBILITY.md`, `docs/PROJECT_MAP.md`, and this audit.
 - Polished `reports/phase7/PHASE7_REPORT.md`: abstract, explicit uncertainty and
   reproduction sections, linked artifacts, and bounded conclusions. Original observed results unchanged; canonical bootstrap intervals are a labeled new analysis.
-- New `analyze_phase7.py`, `test_phase7.py`, `tools/check_cpu.py`,
+- New `src/dllm_unmasking/analyze_phase7.py`, `tests/test_phase7.py`, `scripts/check_cpu.py`,
   `research/benchmark_selection.json`, and `requirements-analysis.txt`.
 - Updated `.gitignore` and `requirements.txt` for private deployment files and
   directly imported, locally exercised analysis dependencies.
-- Sanitized `run_phase3.pbs`, `run_phase4.pbs`, `run_phase5.pbs`, `run_phase6.pbs`
+- Sanitized `experiments/phase3/run.pbs`, `experiments/phase4/run.pbs`, `experiments/phase5/run.pbs`, `experiments/phase6/run.pbs`
   and corresponding Phase 3–6 guide references. Phase 4–6 path examples now use
   environment variables. Earlier scheduler flags and scientific behavior are preserved.
 
@@ -144,12 +146,12 @@ this final pass. No files are staged, deleted, committed or pushed.
 | Status | File |
 | --- | --- |
 | Modified | `.gitignore` |
-| Modified | `PHASE3.md` |
-| Modified | `PHASE4.md` |
-| Modified | `PHASE5.md` |
-| Modified | `PHASE6.md` |
+| Modified | `experiments/phase3/README.md` |
+| Modified | `experiments/phase4/README.md` |
+| Modified | `experiments/phase5/README.md` |
+| Modified | `experiments/phase6/README.md` |
 | Modified | `README.md` |
-| New | `analyze_phase7.py` |
+| New | `src/dllm_unmasking/analyze_phase7.py` |
 | New | `docs/AUDIT.md` |
 | New | `docs/PHASE1.md` |
 | New | `docs/PROJECT_MAP.md` |
@@ -160,9 +162,50 @@ this final pass. No files are staged, deleted, committed or pushed.
 | New | `requirements-analysis.txt` |
 | Modified | `requirements.txt` |
 | New | `research/benchmark_selection.json` |
-| Modified | `run_phase3.pbs` |
-| Modified | `run_phase4.pbs` |
-| Modified | `run_phase5.pbs` |
-| Modified | `run_phase6.pbs` |
-| New | `test_phase7.py` |
-| New | `tools/check_cpu.py` |
+| Modified | `experiments/phase3/run.pbs` |
+| Modified | `experiments/phase4/run.pbs` |
+| Modified | `experiments/phase5/run.pbs` |
+| Modified | `experiments/phase6/run.pbs` |
+| New | `tests/test_phase7.py` |
+| New | `scripts/check_cpu.py` |
+
+## Structural-refactor addendum
+
+See the [movement plan](STRUCTURE_PLAN.md) and [complete layout/movement inventory](STRUCTURE.md).
+Tracked moves were performed with `git mv`, so rename records are staged; subsequent
+content edits and new files remain unstaged. No commit or push was performed.
+The previous cleanup inventory is historical and does not describe current paths.
+
+All 40 CPU tests passed after editable installation: the original 36 tests and
+four structural tests. Reversing only the recorded import/path substitutions
+reconstructs every moved module byte-for-byte with its original SHA256. A test
+verifies an altered inference seed cannot pass historical reconstruction. Configs,
+original samplers without internal imports, and the numerical evaluator retain
+identical bytes. Baseline validation accepts direct or exact reconstructed hashes;
+new inference manifests retain actual current physical hashes and fail closed
+against old interrupted-run manifests.
+
+Public Phase 7 numerical tables, bootstrap provenance and regenerated PNG figures
+match their pre-refactor versions. Original private outputs remain untouched.
+Only documentation paths in report Markdown were adjusted; reported observations,
+intervals and p-values are unchanged. CLI help works from outside the checkout;
+PBS commands retain the repository-root submission requirement and use installed
+modules. Single-file deployment snippets were replaced to preserve package layout.
+
+Privacy protections and the non-credential historical allocation finding remain
+as documented above. No history was rewritten. Local editable-install metadata
+may contain absolute paths and is explicitly ignored. Packaging-tool updates
+were limited to local setuptools/wheel for editable-install verification; no
+models or datasets were downloaded. Scheduler acceptance and actual GPU inference
+were not run. Source layout changes require a new run directory; use the original
+checkout for resuming pre-refactor interrupted jobs.
+
+Final structural checks also passed on a public-files-only copy: editable install,
+33 passing fixture tests with seven explicit private-artifact skips, and byte-exact
+Phase 7 table/provenance reproduction. All three regenerated PNGs also match the
+pre-move generated PNGs byte-for-byte. Historical Phase 6 offline analysis was
+verified on an independent copy of its journal/manifest; original files were not
+modified. Python imports/syntax, seven PBS shell templates, Markdown targets,
+privacy scans, and both staged/unstaged whitespace checks passed. Reachable
+history remains three commits; credential scans found no current or historical
+credentials. The known allocation identifier remains historical metadata.

@@ -1,47 +1,40 @@
 # Project map
 
-Run Python commands from the repository root. The root layout is intentional:
-runners record source hashes, and later phases import earlier helpers directly.
-Moving these files would change provenance and resume behavior.
+Install this checkout once with `python -m pip install --no-deps -e .` after
+installing the chosen CPU/GPU requirements and modern packaging tools. Commands
+below use importable modules. [The layout guide](STRUCTURE.md) lists every move.
 
-| Phase | Scientific implementation / runner | Offline analysis / documentation | Generated location |
-| --- | --- | --- | --- |
-| 1 | `samplers.py`, `run_experiment.py`, `config.yaml` | `analyze_results.py`, [historical guide](PHASE1.md) | `outputs/phase1/` |
-| 1.5 | No inference | `analyze_phase15.py`, [public report](../research/phase15/report.md) | `results/phase15/` |
-| 2 | `phase2_samplers.py`, `phase2_data.py`, `run_phase2.py` | [design](../PHASE2.md) | `outputs/phase2/` |
-| 2.5 | No inference | `analyze_phase25.py`, `prepare_ltr_audit.py` | `results/phase25/` |
-| 3 | `phase3_schedule.py`, `phase3_sampler.py`, `run_phase3.py` | [design](../PHASE3.md), runner `--plan` / `--summarize` | `outputs/phase3/` |
-| 4 | `phase4_sampler.py`, `run_phase4.py` | [design](../PHASE4.md), runner `--summarize` | `outputs/phase4/` |
-| 5 | `phase5_sampler.py`, `run_phase5.py` | [design](../PHASE5.md), runner `--summarize` | `outputs/phase5/` |
-| 6 | Original `samplers.py` through `run_phase6.py` | `analyze_phase6.py`, [design](../PHASE6.md) | `outputs/phase6/` |
-| 7 | No inference | `analyze_phase7.py`, [canonical report](../reports/phase7/PHASE7_REPORT.md) | `results/phase7_reproduced/` |
+| Area | Location and entry point |
+| --- | --- |
+| Decoding and evaluation | `src/dllm_unmasking/`: original samplers, schedule, extractor and data helpers |
+| Offline analyses | `src/dllm_unmasking/analyze_*.py`; run with `python -m dllm_unmasking.analyze_phase7`, etc. |
+| Inference runners | `experiments/phaseN/run.py`; run with `python -m experiments.phaseN.run` |
+| Experiment settings | `configs/phase1.yaml` through `configs/phase6.yaml`, moved byte-for-byte |
+| HPC templates / methodology | `experiments/phaseN/run.pbs` and `README.md` |
+| CPU tests | `tests/`; `python scripts/check_cpu.py`, or `--with-artifacts` for all integrations |
+| Canonical results | [Phase 7 report](../reports/phase7/PHASE7_REPORT.md), tables and PNGs alongside it |
+| Public historical aggregates | `research/`, including the text-free benchmark selection index |
+| Private/generated artifacts | Ignored `outputs/` and `results/`, unchanged |
 
-Each inference phase has a matching config, PBS template, and (Phases 2–6)
-`test_phaseN.py`. `evaluation.py` is the shared, unchanged numerical extractor.
+## Import and baseline dependencies
 
-## Import and input dependencies
+Phase 2 supplies predictions, selection, journaling, cache checks and CSV helpers.
+Phases 3–6 import these and the Phase 1.5/2.5 statistical/diagnostic helpers. Phase 4
+requires completed Phase 3 results; Phases 3, 5 and 6 require completed Phase 2.
+Phase 6 reuses the original Phase 1 sampler for P1. NumPy is therefore a runner
+dependency, not only an offline plotting dependency. Torch is required for sampler
+tests; model loading remains deferred and requires the pinned offline snapshot.
 
-- Phase 2 uses `phase2_data` for selection, offline cache verification, durable
-  write-ahead journaling and duplicate detection; `run_phase2` provides cache and
-  CSV helpers consumed by later runners.
-- Phase 3 imports the Phase 2 prediction helper, exact Phase 2 selection and
-  completed 600-evaluation baseline. Phase 4 additionally requires completed Phase 3.
-- Phase 5 and Phase 6 require completed Phase 2. Later baseline validation checks
-  original source hashes, question metadata and configuration, not just CSV counts.
-- Phases 3–6 import the offline analysis helpers `analyze_phase25` and
-  `analyze_phase15`. NumPy is therefore an inference-runner dependency too.
-- Phase 6 imports its analyzer at run time; its analyzer imports runner validation
-  inside the CLI. Keep both files present. Historical scripts are not standalone
-  single-file transfers.
-- Torch is needed for samplers and fixture tests. Transformers/Hugging Face imports
-  are deferred until cache checks or model loading. PyArrow reads the pinned Parquet.
-- Raw journal records carry responses and trajectories. Started/completed events
-  nest completed records under `result` in Phases 2–6. Phase 1 uses a different
-  `records.jsonl` schema. Do not interchange these formats.
+Phase 1 uses `records.jsonl`; Phases 2–6 use started/completed journal events with
+completed records under `result`. These schemas are not interchangeable. Baseline
+validation checks matching question IDs/settings and historical source identity,
+not merely row counts. See [structural provenance compatibility](STRUCTURE.md#provenance-and-resume).
 
-`research/` contains curated Phase 1/1.5 outputs and a text-free benchmark selection
-index. `reports/phase7/` contains the final report, lightweight figures, and public
-per-question numeric measurements. Generated raw outputs, environment metadata,
-manual response audits, dataset caches and weights stay outside Git. Historical
-phase guides retain their preparation-time status statements; completed outcomes
-are consolidated in the canonical report.
+## Working directories
+
+CLI entry points discover the editable checkout and resolve paths from its root.
+PBS must still be submitted from that root, for example
+`qsub experiments/phase6/run.pbs` after reviewing its placeholder allocation.
+PBS scripts import the installed modules; do not transfer a single runner file.
+Deploy the whole reviewed public tree into a new destination, install it there,
+and restore exact baseline files separately. No packages are installed in a job.

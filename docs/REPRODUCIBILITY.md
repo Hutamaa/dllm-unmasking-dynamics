@@ -1,6 +1,11 @@
 # Reproduction guide
 
-Commands below run from the repository root. There are three levels: public-table
+Commands below run from the repository root after editable installation.
+Use pip ≥21.3 and setuptools ≥64 for editable builds. Installation is a one-time
+preparation step, never performed by a PBS job. The package is intended for an
+editable research checkout, not an isolated wheel without its configs/data.
+CLI entry points also discover this checkout when invoked from another directory;
+explicit relative CLI input/output paths are repository-relative. There are three levels: public-table
 analysis, CPU sampler tests, and full GPU reproduction. Only the last needs model
 weights. Raw journals are not bundled, so an empty clone cannot rebuild response
 case studies or resume the original jobs. No public raw-data download is currently
@@ -28,11 +33,14 @@ python -m venv .venv
 source .venv/bin/activate
 python -m pip install torch==2.7.1
 python -m pip install -r requirements-analysis.txt
+python -m pip install --upgrade pip setuptools wheel
+python -m pip install --no-deps --no-build-isolation -e .
 python -m pip check
 ```
 
 For GPU reproduction, use a compatible CUDA-enabled PyTorch installation in
-`dllm-unmasking`, install `requirements.txt`, and record the actual versions and
+`dllm-unmasking`, install `requirements.txt` and the editable package (`python -m pip install --no-deps -e .`),
+and record the actual versions and
 GPU. Do not copy a macOS environment to a GPU node. Full inference requires BF16
 support and enough memory for the 8B model; recorded jobs requested one GPU, four
 CPUs and 64 GB host memory. Published timings used an RTX PRO 6000 Blackwell
@@ -41,7 +49,7 @@ Server Edition. No model downloads are part of tests or analysis.
 ## Public Phase 7 figures and statistics
 
 ```bash
-python analyze_phase7.py --output-dir results/phase7_reproduced
+python -m dllm_unmasking.analyze_phase7 --output-dir results/phase7_reproduced
 ```
 
 Inputs are the tracked `reports/phase7/unified_per_question.csv`,
@@ -64,7 +72,7 @@ use these new values; `bootstrap_provenance.json` records the generating script 
 input hashes. To verify their exact reproduction:
 
 ```bash
-python analyze_phase7.py --output-dir results/phase7_verified --seed 42 --bootstrap-repetitions 10000
+python -m dllm_unmasking.analyze_phase7 --output-dir results/phase7_verified --seed 42 --bootstrap-repetitions 10000
 cmp reports/phase7/paired_reanalysis.csv results/phase7_verified/paired_reanalysis.csv
 cmp reports/phase7/bootstrap_provenance.json results/phase7_verified/reproduction_metadata.json
 ```
@@ -75,7 +83,7 @@ private raw journals; the public numeric table alone cannot regenerate them.
 ## CPU tests
 
 ```bash
-OMP_NUM_THREADS=1 python tools/check_cpu.py
+OMP_NUM_THREADS=1 python scripts/check_cpu.py
 ```
 
 This runs the historical CPU fixture tests plus public-table tests, with seven
@@ -91,9 +99,9 @@ For the full suite, provide original Phase 2/3 directories and exact selection:
 export PHASE2_RESULTS="$RAW_RESULTS_DIR/phase2"
 export PHASE3_RESULTS="$RAW_RESULTS_DIR/phase3"
 # outputs/phase2/selection.json must also exist (see next section).
-OMP_NUM_THREADS=1 python tools/check_cpu.py --with-artifacts
+OMP_NUM_THREADS=1 python scripts/check_cpu.py --with-artifacts
 # Equivalent historical discovery command, also requiring those artifacts:
-OMP_NUM_THREADS=1 python -m unittest discover -v -p 'test_*.py'
+OMP_NUM_THREADS=1 python -m unittest discover -s tests -v -p 'test_*.py'
 ```
 
 The original tests are preserved unchanged. Some tests expect actual baseline
@@ -131,7 +139,7 @@ if path.exists():
 else:
     path.write_text(json.dumps(value, indent=2) + '\n')
 PY
-python run_phase2.py --prepare-selection --dataset-parquet "$GSM8K_TEST_PARQUET"
+python -m experiments.phase2.run --prepare-selection --dataset-parquet "$GSM8K_TEST_PARQUET"
 python - <<'PY'
 import hashlib, json
 from pathlib import Path
@@ -161,7 +169,7 @@ offline flags to bypass a missing-revision error.
 export HF_HOME="$SCRATCH_DIR/huggingface"
 # If your established installation uses a separate HF_HUB_CACHE, retain it.
 export HF_HUB_OFFLINE=1 HF_DATASETS_OFFLINE=1 TRANSFORMERS_OFFLINE=1
-python run_phase2.py --check-cache --dataset-parquet "$GSM8K_TEST_PARQUET"
+python -m experiments.phase2.run --check-cache --dataset-parquet "$GSM8K_TEST_PARQUET"
 ```
 
 PBS templates assume queue `gpu_bwp6000`, module `anaconda2025/2025-gpu` for later
@@ -175,7 +183,7 @@ These templates are historical examples, not portable scheduler configuration.
 Copy the template to an ignored operational file before editing it:
 
 ```bash
-cp run_phase6.pbs run_phase6.local.pbs
+cp experiments/phase6/run.pbs run_phase6.local.pbs
 # Edit allocation/site settings in run_phase6.local.pbs.
 # Deploy this whole repository, excluding .git, outputs, results and caches,
 # into a NEW destination; do not overwrite a live historical experiment tree.
@@ -192,7 +200,7 @@ by analysis:
 
 ```bash
 # On HPC, from the deployed repository root, with baseline and cache present:
-python run_phase6.py --check-cache
+python -m experiments.phase6.run --check-cache
 export PHASE6_POLICY=left_to_right
 qsub -v HF_HOME,PHASE6_POLICY run_phase6.local.pbs
 # After that job has stopped, confidence can resume into the same run directory:
@@ -208,12 +216,12 @@ this is overhead allowance, not a runtime guarantee.
 
 | Phase | Runner and scope | Required baseline / analysis |
 | --- | --- | --- |
-| 1 | `run_experiment.py --config PATH`; 150 × five policies | Copy `config.yaml` to an ignored config, replace dataset `main` with pinned SHA, set fresh output; [historical instructions](PHASE1.md) |
-| 2 | `run_phase2.py`; 600 evaluations, P4/P8 only | Exact selection/exclusions and pinned caches |
-| 3 | `run_phase3.py`; 60 spaced P8 | Original completed Phase 2; `--plan` performs CPU schedule analysis |
-| 4 | `run_phase4.py`; 120 revision evaluations | Original completed Phase 3; `--limit 20`, `--smoke-test` have separate documented scopes |
-| 5 | `run_phase5.py`; 120 confidence revision evaluations | Original completed Phase 2 |
-| 6 | `run_phase6.py --policy both`; 120 P1 evaluations | Original completed Phase 2; independent policies supported |
+| 1 | `experiments/phase1/run.py --config PATH`; 150 × five policies | Copy `configs/phase1.yaml` to an ignored config, replace dataset `main` with pinned SHA, set fresh output; [historical instructions](PHASE1.md) |
+| 2 | `experiments/phase2/run.py`; 600 evaluations, P4/P8 only | Exact selection/exclusions and pinned caches |
+| 3 | `experiments/phase3/run.py`; 60 spaced P8 | Original completed Phase 2; `--plan` performs CPU schedule analysis |
+| 4 | `experiments/phase4/run.py`; 120 revision evaluations | Original completed Phase 3; `--limit 20`, `--smoke-test` have separate documented scopes |
+| 5 | `experiments/phase5/run.py`; 120 confidence revision evaluations | Original completed Phase 2 |
+| 6 | `experiments/phase6/run.py --policy both`; 120 P1 evaluations | Original completed Phase 2; independent policies supported |
 
 All full-run commands above perform inference and require a PBS GPU allocation.
 Phase 1 resolves symbolic revisions and can download; pin its dataset SHA and
@@ -242,11 +250,11 @@ as read-only auditors of original archived journals.
 Offline commands with original raw inputs:
 
 ```bash
-python analyze_phase15.py --input-dir "$RAW_RESULTS_DIR/phase1" --output-dir results/phase15_reproduced
-python analyze_phase25.py --input-dir "$RAW_RESULTS_DIR/phase2" --output-dir results/phase25_reproduced
+python -m dllm_unmasking.analyze_phase15 --input-dir "$RAW_RESULTS_DIR/phase1" --output-dir results/phase15_reproduced
+python -m dllm_unmasking.analyze_phase25 --input-dir "$RAW_RESULTS_DIR/phase2" --output-dir results/phase25_reproduced
 # Phase 6 analyzer requires an independent copy under outputs/phase6 and the
 # original config/source hashes. It rewrites derived summaries, not its journal:
-python analyze_phase6.py --run-dir outputs/phase6/retrieved/run --phase2-results "$RAW_RESULTS_DIR/phase2"
+python -m dllm_unmasking.analyze_phase6 --run-dir outputs/phase6/retrieved/run --phase2-results "$RAW_RESULTS_DIR/phase2"
 ```
 
 Later runners' `--summarize` modes rebuild only their own derived outputs; work on
@@ -269,3 +277,21 @@ for policy differences. The 20/20/20 stratified set is not representative of the
 natural GSM8K difficulty distribution. Numerical correctness is distinct from
 arithmetic validity, coherent text and faithful reasoning. See the canonical
 report for exploratory multiplicity and parser limitations.
+
+## Structural compatibility and historical resumes
+
+See [the layout guide](STRUCTURE.md). Source names in historical manifests resolve
+to relocated files. A baseline is accepted only if the physical SHA256 matches, or
+if reversing the recorded import/path substitutions reconstructs the exact
+historical bytes and expected SHA256. Current run manifests hash actual physical
+files; they do not pretend the moved code has the old byte hash. New source hashes
+therefore require fresh inference output directories. Resume interrupted runs from
+the original `fa8971a` checkout; never edit historical manifests to bypass a mismatch.
+The configs are moved byte-for-byte, so settings, output paths and configuration
+hashes are unchanged. No historical artifact is relocated or rewritten.
+
+Phase 7's existing `script_sha256` identifies the pre-structural generator bytes.
+The generator verifies their exact reconstruction before reporting that digest.
+The [source-layout record](../src/dllm_unmasking/source_layout.json) documents all
+substitutions, so metadata and numerical tables reproduce without changing the
+canonical historical provenance file.
