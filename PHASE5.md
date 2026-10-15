@@ -135,7 +135,7 @@ cd /path/to/existing/dllm-unmasking-dynamics
 module load anaconda2025/2025-gpu
 source "$(conda info --base)/etc/profile.d/conda.sh"
 conda activate dllm-unmasking
-export HF_HOME='/path/to/the/existing/scratch/huggingface-cache'
+export HF_HOME="$SCRATCH_DIR/huggingface"
 export HF_HUB_OFFLINE=1 HF_DATASETS_OFFLINE=1 TRANSFORMERS_OFFLINE=1
 export PHASE2_RESULTS='outputs/phase2/run'
 python -c 'import phase5_sampler, run_phase5, phase2_samplers, phase2_data, run_phase2, evaluation, analyze_phase25, analyze_phase15'
@@ -151,7 +151,7 @@ qstat -f "$JOB_ID"
 tail -f "outputs/phase5/logs/job-${JOB_ID}.log"
 ```
 
-PBS uses **`#PBS -P gs_ccds_taisp`**, `gpu_bwp6000`, one GPU, four CPU cores,
+PBS uses **`#PBS -P YOUR_PROJECT_CODE`**, `gpu_bwp6000`, one GPU, four CPU cores,
 64 GB RAM, `dllm-unmasking`, and **`set -eo pipefail`**. The script changes to
 submission root, checks imports, then runs offline file-only cache preflight and
 full Phase 5. It supports only `PHASE5_MODE=full`. Cached weights/tokenizer must be

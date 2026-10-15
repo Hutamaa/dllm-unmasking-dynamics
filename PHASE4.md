@@ -155,7 +155,7 @@ cd /path/to/existing/dllm-unmasking-dynamics
 module load anaconda2025/2025-gpu
 source "$(conda info --base)/etc/profile.d/conda.sh"
 conda activate dllm-unmasking
-export HF_HOME='/path/to/the/existing/Phase3/scratch/huggingface-cache'
+export HF_HOME="$SCRATCH_DIR/huggingface"
 export HF_HUB_OFFLINE=1 HF_DATASETS_OFFLINE=1 TRANSFORMERS_OFFLINE=1
 export PHASE3_RESULTS='outputs/phase3/run'
 python -c 'import phase4_sampler, run_phase4, phase3_schedule, phase2_samplers, phase2_data, run_phase2, evaluation, analyze_phase25, analyze_phase15'
@@ -187,7 +187,7 @@ export PHASE4_MODE=full
 JOB_ID=$(qsub -v "$PBS_VARS" run_phase4.pbs)
 ```
 
-The PBS file uses `set -eo pipefail` (no `-u`), project **gs_ccds_taisp**, queue
+The PBS file uses `set -eo pipefail` (no `-u`), project **YOUR_PROJECT_CODE**, queue
 **gpu_bwp6000**, one GPU/four CPUs/64 GB RAM, the proven module
 **anaconda2025/2025-gpu** and environment **dllm-unmasking**. It cds to submission
 root and verifies imports before file-only cache preflight and the chosen run.

@@ -188,7 +188,7 @@ cd /path/to/existing/dllm-unmasking-dynamics
 module load anaconda2025/2025-gpu
 source "$(conda info --base)/etc/profile.d/conda.sh"
 conda activate dllm-unmasking
-export HF_HOME='/path/to/established/scratch/huggingface-cache'
+export HF_HOME="$SCRATCH_DIR/huggingface"
 export HF_HUB_OFFLINE=1 HF_DATASETS_OFFLINE=1 TRANSFORMERS_OFFLINE=1
 export PHASE2_RESULTS='outputs/phase2/run'
 python -c 'import run_phase6, analyze_phase6, samplers, phase2_samplers, phase2_data, run_phase2, evaluation, analyze_phase25, analyze_phase15'
@@ -213,7 +213,7 @@ JOB_ID=$(qsub -v "$PBS_VARS" run_phase6.pbs)
 ```
 
 Alternatively set `PHASE6_POLICY=both` before one submission. Resubmission skips all
-validated completions. Do not run concurrent writers. PBS uses project gs_ccds_taisp,
+validated completions. Do not run concurrent writers. PBS uses project YOUR_PROJECT_CODE,
 queue gpu_bwp6000, dllm-unmasking, and **set -eo pipefail**. No downloads or baseline
 runs are launched. `--check-cache` inspects pinned files without loading/inference.
 

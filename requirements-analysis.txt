@@ -1,0 +1,5 @@
+# CPU offline analyses; versions exercised locally. Torch is separate for sampler tests.
+numpy==2.0.2
+matplotlib==3.9.4
+PyYAML==6.0.2
+pyarrow==19.0.1

@@ -1,0 +1,463 @@
+{
+  "dataset": "openai/gsm8k",
+  "dataset_revision": "740312add88f781978c0658806c59bc2815b9866",
+  "subset": "main",
+  "split": "test",
+  "dataset_test_parquet_sha256": "ee7b8da9e381df27b9e3f7758a159ab2bdaa4dbaa910546cbbc47e0cb44e4f59",
+  "selection_seed": 20261014,
+  "excluded_phase1_ids": [
+    1,
+    6,
+    13,
+    23,
+    39,
+    51,
+    54,
+    61,
+    65,
+    88,
+    93,
+    96,
+    114,
+    130,
+    135,
+    142,
+    146,
+    161,
+    163,
+    178,
+    186,
+    189,
+    191,
+    198,
+    206,
+    209,
+    217,
+    224,
+    228,
+    229,
+    234,
+    255,
+    283,
+    285,
+    292,
+    313,
+    318,
+    323,
+    326,
+    327,
+    330,
+    333,
+    334,
+    350,
+    365,
+    393,
+    407,
+    429,
+    432,
+    435,
+    440,
+    447,
+    449,
+    451,
+    457,
+    466,
+    469,
+    476,
+    501,
+    505,
+    514,
+    538,
+    539,
+    541,
+    542,
+    546,
+    548,
+    552,
+    563,
+    569,
+    592,
+    600,
+    601,
+    611,
+    644,
+    646,
+    663,
+    664,
+    689,
+    696,
+    704,
+    727,
+    735,
+    740,
+    741,
+    747,
+    758,
+    765,
+    775,
+    777,
+    778,
+    781,
+    788,
+    810,
+    817,
+    821,
+    859,
+    864,
+    865,
+    877,
+    890,
+    919,
+    928,
+    929,
+    939,
+    940,
+    946,
+    958,
+    1000,
+    1010,
+    1022,
+    1025,
+    1034,
+    1039,
+    1043,
+    1083,
+    1086,
+    1093,
+    1098,
+    1099,
+    1103,
+    1104,
+    1116,
+    1130,
+    1133,
+    1140,
+    1149,
+    1161,
+    1182,
+    1195,
+    1197,
+    1206,
+    1209,
+    1220,
+    1221,
+    1226,
+    1232,
+    1236,
+    1247,
+    1266,
+    1280,
+    1285,
+    1287,
+    1300,
+    1301,
+    1308,
+    1309,
+    1310,
+    1312,
+    1316
+  ],
+  "selection_sha256": "5eb7681ca76a0ed61d7fe55296e9cf9a8aacfb8f802971abd9b5894e9992a45c",
+  "questions": [
+    {
+      "question_id": 211,
+      "stratum": "0-2",
+      "calculation_count": 1
+    },
+    {
+      "question_id": 214,
+      "stratum": "0-2",
+      "calculation_count": 2
+    },
+    {
+      "question_id": 244,
+      "stratum": "0-2",
+      "calculation_count": 2
+    },
+    {
+      "question_id": 412,
+      "stratum": "0-2",
+      "calculation_count": 2
+    },
+    {
+      "question_id": 484,
+      "stratum": "0-2",
+      "calculation_count": 2
+    },
+    {
+      "question_id": 490,
+      "stratum": "0-2",
+      "calculation_count": 2
+    },
+    {
+      "question_id": 499,
+      "stratum": "0-2",
+      "calculation_count": 0
+    },
+    {
+      "question_id": 544,
+      "stratum": "0-2",
+      "calculation_count": 2
+    },
+    {
+      "question_id": 549,
+      "stratum": "0-2",
+      "calculation_count": 2
+    },
+    {
+      "question_id": 677,
+      "stratum": "0-2",
+      "calculation_count": 2
+    },
+    {
+      "question_id": 682,
+      "stratum": "0-2",
+      "calculation_count": 1
+    },
+    {
+      "question_id": 695,
+      "stratum": "0-2",
+      "calculation_count": 0
+    },
+    {
+      "question_id": 759,
+      "stratum": "0-2",
+      "calculation_count": 2
+    },
+    {
+      "question_id": 811,
+      "stratum": "0-2",
+      "calculation_count": 2
+    },
+    {
+      "question_id": 855,
+      "stratum": "0-2",
+      "calculation_count": 0
+    },
+    {
+      "question_id": 883,
+      "stratum": "0-2",
+      "calculation_count": 2
+    },
+    {
+      "question_id": 964,
+      "stratum": "0-2",
+      "calculation_count": 2
+    },
+    {
+      "question_id": 1050,
+      "stratum": "0-2",
+      "calculation_count": 2
+    },
+    {
+      "question_id": 1152,
+      "stratum": "0-2",
+      "calculation_count": 1
+    },
+    {
+      "question_id": 1235,
+      "stratum": "0-2",
+      "calculation_count": 2
+    },
+    {
+      "question_id": 30,
+      "stratum": "3-4",
+      "calculation_count": 3
+    },
+    {
+      "question_id": 118,
+      "stratum": "3-4",
+      "calculation_count": 3
+    },
+    {
+      "question_id": 158,
+      "stratum": "3-4",
+      "calculation_count": 3
+    },
+    {
+      "question_id": 205,
+      "stratum": "3-4",
+      "calculation_count": 3
+    },
+    {
+      "question_id": 268,
+      "stratum": "3-4",
+      "calculation_count": 3
+    },
+    {
+      "question_id": 298,
+      "stratum": "3-4",
+      "calculation_count": 4
+    },
+    {
+      "question_id": 521,
+      "stratum": "3-4",
+      "calculation_count": 4
+    },
+    {
+      "question_id": 561,
+      "stratum": "3-4",
+      "calculation_count": 4
+    },
+    {
+      "question_id": 604,
+      "stratum": "3-4",
+      "calculation_count": 4
+    },
+    {
+      "question_id": 674,
+      "stratum": "3-4",
+      "calculation_count": 3
+    },
+    {
+      "question_id": 711,
+      "stratum": "3-4",
+      "calculation_count": 3
+    },
+    {
+      "question_id": 791,
+      "stratum": "3-4",
+      "calculation_count": 3
+    },
+    {
+      "question_id": 795,
+      "stratum": "3-4",
+      "calculation_count": 3
+    },
+    {
+      "question_id": 837,
+      "stratum": "3-4",
+      "calculation_count": 4
+    },
+    {
+      "question_id": 908,
+      "stratum": "3-4",
+      "calculation_count": 3
+    },
+    {
+      "question_id": 933,
+      "stratum": "3-4",
+      "calculation_count": 4
+    },
+    {
+      "question_id": 975,
+      "stratum": "3-4",
+      "calculation_count": 4
+    },
+    {
+      "question_id": 1007,
+      "stratum": "3-4",
+      "calculation_count": 3
+    },
+    {
+      "question_id": 1060,
+      "stratum": "3-4",
+      "calculation_count": 3
+    },
+    {
+      "question_id": 1186,
+      "stratum": "3-4",
+      "calculation_count": 3
+    },
+    {
+      "question_id": 9,
+      "stratum": "5+",
+      "calculation_count": 5
+    },
+    {
+      "question_id": 122,
+      "stratum": "5+",
+      "calculation_count": 5
+    },
+    {
+      "question_id": 157,
+      "stratum": "5+",
+      "calculation_count": 6
+    },
+    {
+      "question_id": 218,
+      "stratum": "5+",
+      "calculation_count": 7
+    },
+    {
+      "question_id": 246,
+      "stratum": "5+",
+      "calculation_count": 5
+    },
+    {
+      "question_id": 249,
+      "stratum": "5+",
+      "calculation_count": 6
+    },
+    {
+      "question_id": 256,
+      "stratum": "5+",
+      "calculation_count": 6
+    },
+    {
+      "question_id": 353,
+      "stratum": "5+",
+      "calculation_count": 5
+    },
+    {
+      "question_id": 442,
+      "stratum": "5+",
+      "calculation_count": 5
+    },
+    {
+      "question_id": 468,
+      "stratum": "5+",
+      "calculation_count": 5
+    },
+    {
+      "question_id": 584,
+      "stratum": "5+",
+      "calculation_count": 6
+    },
+    {
+      "question_id": 603,
+      "stratum": "5+",
+      "calculation_count": 5
+    },
+    {
+      "question_id": 618,
+      "stratum": "5+",
+      "calculation_count": 5
+    },
+    {
+      "question_id": 641,
+      "stratum": "5+",
+      "calculation_count": 5
+    },
+    {
+      "question_id": 709,
+      "stratum": "5+",
+      "calculation_count": 5
+    },
+    {
+      "question_id": 831,
+      "stratum": "5+",
+      "calculation_count": 5
+    },
+    {
+      "question_id": 926,
+      "stratum": "5+",
+      "calculation_count": 8
+    },
+    {
+      "question_id": 1165,
+      "stratum": "5+",
+      "calculation_count": 6
+    },
+    {
+      "question_id": 1215,
+      "stratum": "5+",
+      "calculation_count": 5
+    },
+    {
+      "question_id": 1251,
+      "stratum": "5+",
+      "calculation_count": 5
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "analysis_version": "phase7-stratified-reanalysis-v1",
+  "script_sha256": "19c3c7d115f1fae62787a829eaa3fad719f59bd6c30fe603b0e5f0b80411f82f",
+  "input_sha256": {
+    "unified_per_question.csv": "7becac59d217b799b3f6360ade8c1ecd1a901b4d0900e3c777eeac3d23a537f4",
+    "method_summary.csv": "e1f33fd324fde17559df3093d231521eaf832ac0e71154aff0bc4ccf2a97612f",
+    "selected_paired_tests.csv": "5e558cc83a1458f7c5313dc6ef9d200618fc9c85470fbf7afe4938cc581160a7",
+    "benchmark_selection.json": "7b478631c7171d7634a62b912ece76bf68282b3599e799b06fbbb03dcdd475fc"
+  },
+  "seed": 42,
+  "bootstrap_repetitions": 10000,
+  "rng": "NumPy Generator(PCG64(seed)); one shared stream across contrasts",
+  "order": "Contrast rows in selected_paired_tests.csv; ascending question IDs; strata 0-2,3-4,5+",
+  "resampling": "For each contrast and stratum draw a (10000,20) index array with replacement; sum paired B-minus-A correctness differences across strata, divide by 60, multiply by 100. Array first dimension follows bootstrap_repetitions.",
+  "interval": "Pointwise 95% percentile; quantiles 0.025,0.975; NumPy method=linear",
+  "multiplicity": "Holm across ten exact McNemar p-values; bootstrap intervals are not multiplicity-adjusted",
+  "numpy": "2.0.2",
+  "matplotlib": "3.9.4",
+  "bootstrap": "Paired question bootstrap within fixed 20/20/20 strata; percentile intervals",
+  "original_intervals": "Original bootstrap implementation/provenance unavailable; preserved, not claimed reproduced",
+  "observations": 1020,
+  "methods": 17,
+  "questions": 60
+}

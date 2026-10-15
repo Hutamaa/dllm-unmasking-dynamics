@@ -1,6 +1,6 @@
 #!/bin/bash
 #PBS -N llada-phase3
-#PBS -A gs_ccds_taisp
+#PBS -A YOUR_PROJECT_CODE
 #PBS -q gpu_bwp6000
 #PBS -l select=1:ncpus=4:mem=64gb:ngpus=1
 #PBS -l walltime=04:00:00

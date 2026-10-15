@@ -33,3 +33,12 @@ records.jsonl
 trajectories.jsonl
 environments.jsonl
 analysis_metadata.json
+
+# Local deployment copies, archives, profiler data, and notebook checkpoints.
+run*.local.pbs
+*.local.yaml
+*.tar
+*.tar.gz
+*.zip
+*.prof
+.ipynb_checkpoints/

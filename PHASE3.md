@@ -166,7 +166,7 @@ qstat -f "$JOB_ID"
 tail -f "outputs/phase3/logs/job-${JOB_ID}.log"
 ```
 
-The script uses project **gs_ccds_taisp**, queue **gpu_bwp6000**, module
+The script uses project **YOUR_PROJECT_CODE**, queue **gpu_bwp6000**, module
 **anaconda2025/2025-gpu**, and environment **dllm-unmasking**. `--check-cache`
 inspects existing pinned files only; it does not load weights or run inference.
 Do not enable downloads if preflight fails. Submit once, and resubmit the same
