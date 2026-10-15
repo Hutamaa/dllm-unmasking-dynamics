@@ -4,7 +4,7 @@ import json
 from pathlib import Path
 from statistics import mean
 
-from dllm_unmasking.ar_baseline import (MODEL, model_spec, load_config, inputs, object_hash, digest, read_journal)
+from dllm_unmasking.ar_baseline import (MODEL, model_spec, load_config, inputs, object_hash, digest, read_journal, budget_label)
 from dllm_unmasking.ar_analysis import baseline, summarize, FRONTIER
 from dllm_unmasking.analyze_phase7 import write_csv
 from dllm_unmasking.layout import enter_repository, repository_root
@@ -24,7 +24,7 @@ def load_run(path):
     for key, file in [('selection_sha256',cfg['selection_file']), ('diffusion_sha256',cfg['diffusion_results'])]:
         if manifest[key] != digest(file):
             raise ValueError('Run inputs differ from the original matched benchmark')
-    records = read_journal(path/'journal.jsonl', questions, run_hash, repair=False, model=cfg['model'], revision=cfg['model_revision'] if cfg['model'] != MODEL else None)
+    records = read_journal(path/'journal.jsonl', questions, run_hash, repair=False, model=cfg['model'], revision=cfg['model_revision'] if cfg['model'] != MODEL else None, cap=cfg['max_new_tokens'])
     if any(r.get('model_revision',cfg['model_revision']) != cfg['model_revision'] for r in records.values()):
         raise ValueError('Records from different model revisions cannot be combined')
     # Missing model fields are accepted only for the original Llama schema.
@@ -37,10 +37,13 @@ def mark_dominance(points):
     """Descriptive point-estimate dominance across explicitly different timing scopes."""
     eligible = [p for p in points if p['n'] == 60]
     for point in points:
-        point['descriptive_cross_scope_dominated'] = None if point['n'] != 60 else any(
-            other['mean_gpu_seconds'] <= point['mean_gpu_seconds'] and other['accuracy'] >= point['accuracy']
-            and (other['mean_gpu_seconds'] < point['mean_gpu_seconds'] or other['accuracy'] > point['accuracy'])
-            for other in eligible)
+        def dominated(pool):
+            return any(other['mean_gpu_seconds'] <= point['mean_gpu_seconds'] and other['accuracy'] >= point['accuracy']
+                       and (other['mean_gpu_seconds'] < point['mean_gpu_seconds'] or other['accuracy'] > point['accuracy'])
+                       for other in pool)
+        point['descriptive_cross_budget_dominated'] = None if point['n'] != 60 else dominated(eligible)
+        point['descriptive_cross_scope_dominated'] = (None if point['n'] != 60 or point.get('max_new_tokens', 256) != 256
+            else dominated([p for p in eligible if p.get('max_new_tokens', 256) == 256]))
     return points
 
 
@@ -56,21 +59,22 @@ def plot(out, points):
         if p['n'] != 60:
             continue  # Different denominators cannot define the matched frontier.
         dominated = p['descriptive_cross_scope_dominated']
-        ax.scatter(p['mean_gpu_seconds'],100*p['accuracy'],marker='x' if dominated else ('o' if p['family']=='diffusion' else 'D'),
+        ax.scatter(p['mean_gpu_seconds'],100*p['accuracy'],marker='x' if dominated else ('o' if p['family']=='diffusion' else ('^' if p['max_new_tokens']==512 else 'D')),
                    color='tab:red' if dominated else ('tab:blue' if p['family']=='diffusion' else 'tab:green'),s=65)
         offset = (5,-16) if p['name']=='confidence P8' else (5,7)
-        ax.annotate(p['name'],(p['mean_gpu_seconds'],100*p['accuracy']),xytext=offset,textcoords='offset points',fontsize=8)
+        ax.annotate(p['name'] + ('' if p['family']=='ar' else ' [256-token]'),(p['mean_gpu_seconds'],100*p['accuracy']),xytext=offset,textcoords='offset points',fontsize=8)
     ax.set(xscale='log',xlabel='Mean recorded GPU interval / question (s; different timing scopes)',ylabel='Numerical-answer accuracy (%)',
            ylim=(0,100),title='Matched 60-question system comparison — observed point estimates')
     ax.margins(x=.3)
     ax.legend(handles=[Line2D([],[],color='tab:blue',marker='o',linestyle='--',label='Original LLaDA empirical frontier'),
-                       Line2D([],[],color='tab:green',marker='D',linestyle='',label='Completed AR model run'),
+                       Line2D([],[],color='tab:green',marker='D',linestyle='',label='Matched-256 AR run'),
+                       Line2D([],[],color='tab:green',marker='^',linestyle='',label='Extended-512 AR (unequal budget)'),
                        Line2D([],[],color='tab:red',marker='x',linestyle='',label='Descriptively dominated across recorded scopes')],fontsize=8)
     n_ar=sum(p['family']=='ar' and p['n']==60 for p in points)
     partial=sum(p['family']=='ar' and p['n']!=60 for p in points)
     fig.text(.5,.035,'AR: prefill + native generation. LLaDA: full sampler. Different jobs, models and tokenizers.\n'
              f'No controlled latency/architecture claim. {n_ar} completed AR runs; {partial} partial runs omitted from plot.\n'
-             'Dominance ignores sampling/timing uncertainty and is descriptive only.',ha='center',fontsize=9)
+             'Cross-scope dominance uses matched-256 points only; 512 is a separate budget sensitivity analysis.',ha='center',fontsize=9)
     fig.tight_layout(rect=[0,.15,1,1]);fig.savefig(out/'accuracy_latency.png',dpi=160);plt.close(fig)
 
 
@@ -88,31 +92,31 @@ def compare(out, run_dirs, cfg):
     points=[];seen=set();runs=[]
     for method in FRONTIER:
         rs=list(groups[method].values())
-        points.append(dict(family='diffusion',name=method,model='GSAI-ML/LLaDA-8B-Instruct',revision='852152c60bdfed4632635bfcf3e83408ad3f65bf',
+        points.append(dict(family='diffusion',name=method,max_new_tokens=256,comparison_kind='matched_256',model='GSAI-ML/LLaDA-8B-Instruct',revision='852152c60bdfed4632635bfcf3e83408ad3f65bf',
                            run_hash='',n=60,correct=sum(r['correct'] for r in rs),accuracy=mean(r['correct'] for r in rs),
                            mean_gpu_seconds=mean(r['gpu_seconds'] for r in rs),scope='Historical full diffusion sampler stream interval'))
     out.mkdir(parents=True,exist_ok=True)
     for path in paths:
         run_cfg,qs,records,manifest=load_run(path)
-        identity=(run_cfg['model'],run_cfg['model_revision'])
+        identity=(run_cfg['model'],run_cfg['model_revision'],run_cfg['max_new_tokens'])
         if identity in seen:
-            raise ValueError('Choose one run per model/revision; replicates are never pooled')
+            raise ValueError('Choose one run per model/revision/budget; replicates are never pooled')
         seen.add(identity);alias=model_spec(run_cfg['model'])['alias']
-        run_out=out/'runs'/f'{alias}-{run_cfg["model_revision"][:8]}-{manifest["run_hash"][:8]}'
+        run_out=out/'runs'/f'{alias}-{identity[2]}-{run_cfg["model_revision"][:8]}-{manifest["run_hash"][:8]}'
         run_out.mkdir(parents=True,exist_ok=True)
         summarize(run_out,records,qs,run_cfg)
-        runs.append(dict(model=identity[0],revision=identity[1],run_hash=manifest['run_hash'],n_completed=len(records),complete=len(records)==60,
+        runs.append(dict(max_new_tokens=identity[2],comparison_kind=budget_label(identity[2]),model=identity[0],revision=identity[1],run_hash=manifest['run_hash'],n_completed=len(records),complete=len(records)==60,
                          manifest_sha256=digest(path/'manifest.json'),journal_sha256=digest(path/'journal.jsonl')))
         if not records:
             continue
         rs=list(records.values())
-        points.append(dict(family='ar',name=f'{identity[0].split("/")[-1]} {identity[1][:8]}',model=identity[0],revision=identity[1],run_hash=manifest['run_hash'],
+        points.append(dict(family='ar',name=f'{identity[0].split("/")[-1]} {identity[1][:8]} [{identity[2]}-token]',max_new_tokens=identity[2],comparison_kind=budget_label(identity[2]),model=identity[0],revision=identity[1],run_hash=manifest['run_hash'],
                            n=len(rs),correct=sum(r['correct'] for r in rs),accuracy=mean(r['correct'] for r in rs),
                            mean_gpu_seconds=mean(r['gpu_prefill_decode_seconds'] for r in rs),scope='AR prefill + native cached generation stream interval'))
     mark_dominance(points);write_csv(out/'accuracy_latency.csv',points);plot(out,points)
     atomic_json(out/'comparison_metadata.json',dict(runs=runs,diffusion_sha256=digest(cfg['diffusion_results']),
                 selection_sha256=digest(cfg['selection_file']),
-                notes=['No pooling across models/revisions/runs','Partial AR runs excluded from dominance and figure',
+                notes=['No pooling across models/revisions/token budgets/runs','Partial AR runs excluded from dominance and figure',
                        'Dominance is descriptive across unequal timing scopes, not a controlled latency result']))
     if any(digest(p)!=h for p,h in protected.items()):
         raise RuntimeError('Read-only input changed during comparison')
@@ -121,13 +125,16 @@ def compare(out, run_dirs, cfg):
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--run-dir',action='append',help='Repeat for one run per AR model/revision; defaults to existing configured runs')
+    parser.add_argument('--run-dir',action='append',help='Repeat for one run per AR model/revision/budget; defaults to existing configured runs')
     parser.add_argument('--output-dir',default='results/phase8_comparison')
     args=parser.parse_args()
     paths=args.run_dir
     if paths is None:
         paths=[load_config(model=alias)['output_dir'] for alias in ('qwen','llama')
                if (Path(load_config(model=alias)['output_dir'])/'manifest.json').exists()]
+    if args.run_dir is None:
+        extended=load_config('configs/phase8_qwen_512.yaml')['output_dir']
+        if (Path(extended)/'manifest.json').exists(): paths.append(extended)
     points=compare(args.output_dir,paths,load_config())
     print(f'Comparison saved: {sum(p["family"]=="ar" and p["n"]==60 for p in points)} completed AR overlays; partial runs are not ranked.')
 

@@ -6,7 +6,8 @@ accuracy, decode latency, and output degeneration in **LLaDA-8B-Instruct** on GS
 It is an exploratory research benchmark, with reproducible samplers, CPU tests,
 paired analyses, and an explicit record of limitations.
 
-[Technical report](reports/phase7/PHASE7_REPORT.md) ·
+[LLaDA report](reports/phase7/PHASE7_REPORT.md) ·
+[Phase 8 AR comparison](reports/phase8/PHASE8_REPORT.md) ·
 [Reproduction guide](docs/REPRODUCIBILITY.md) ·
 [Repository map](docs/PROJECT_MAP.md) ·
 [Privacy and validation audit](docs/AUDIT.md)
@@ -128,7 +129,7 @@ first. No downloads or job submissions are performed by the CPU quick start.
 | Phase 3 | [Spaced schedule](experiments/phase3/README.md), [schedule definition](src/dllm_unmasking/phase3_schedule.py) |
 | Phases 4 / 5 | [Spaced revision](experiments/phase4/README.md), [confidence revision](experiments/phase5/README.md) |
 | Phase 6 | [Matched sequential benchmark](experiments/phase6/README.md), [runner](experiments/phase6/run.py), [analysis](src/dllm_unmasking/analyze_phase6.py) |
-| Phase 8 | [Matched autoregressive baseline](experiments/phase8/README.md), [runner](experiments/phase8/run.py); Qwen2.5 default; Llama optional; no measured AR results |
+| Phase 8 | [Completed Qwen baseline and budget sensitivity](reports/phase8/PHASE8_REPORT.md); [generation guide](experiments/phase8/README.md), [runner](experiments/phase8/run.py); Llama remains optional and unevaluated |
 | Evaluation / tests | [Unchanged extractor](src/dllm_unmasking/evaluation.py), [test guide](docs/REPRODUCIBILITY.md#cpu-tests), [dependency map](docs/PROJECT_MAP.md) |
 
 Scientific modules live in `src/dllm_unmasking/`; phase runners and PBS templates
@@ -147,3 +148,23 @@ reasoning. Cross-phase GPU stream intervals include host launch gaps and do not
 measure production throughput, queue wait, or pure kernel time. The observed
 Pareto frontier and small remasking gains need held-out confirmation. No
 state-of-the-art or broadly generalizable decoding improvement is claimed.
+
+## Phase 8: completed autoregressive comparison
+
+On the same 60 questions, Qwen2.5-7B-Instruct achieved **28/60 (46.7%)** with a
+256-token cap and **50/60 (83.3%)** with a 512-token cap. Mean recorded GPU
+**prefill + decode** intervals were **5.324 s** and **6.235 s**, with **32/60**
+and **0/60** length-limited outputs. The larger budget yielded 23 recoveries and
+one regression; numerical correctness does not establish faithful reasoning.
+
+The 256 comparison matches nominal generated positions, not compute, tokenization,
+actual length, or architecture. LLaDA LTR P4/P1 achieved 37/60 and 43/60, with
+**decode-only** intervals of 2.573 s and 10.251 s. Cross-model dominance remains
+unvalidated until timing boundaries are harmonized; the paired Qwen-512 versus
+LTR P1 accuracy difference is statistically uncertain.
+
+See the [canonical Phase 8 report](reports/phase8/PHASE8_REPORT.md) for paired
+statistics, strata, output diagnostics, figures and reproducibility, and the
+[512 deployment guide](experiments/phase8/QWEN_512.md) for the isolated run setup.
+Public-only statistical verification: `python -m dllm_unmasking.finalize_phase8 --verify-public`.
+No Phase 9 experiment has been started.

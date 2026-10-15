@@ -1,0 +1,22 @@
+model: Qwen/Qwen2.5-7B-Instruct
+# Verified from the official public Hub metadata API on 2026-10-15.
+model_revision: a09a35458c702b33eeacc393d103063234e8bc28
+# Runtime pin additionally records authorized metadata or complete cached files.
+model_pin: outputs/phase8/qwen/model_pin.json
+cache_environment: PHASE8_HUB_CACHE
+selection_file: outputs/phase2/selection.json
+public_selection: research/benchmark_selection.json
+diffusion_results: reports/phase7/unified_per_question.csv
+phase7_provenance: reports/phase7/bootstrap_provenance.json
+output_dir: outputs/phase8/qwen_512/run
+inference_seed: 42
+prompt_suffix: "\nSolve this problem step by step. End with '#### <final numerical answer>'."
+max_new_tokens: 512
+do_sample: false
+use_cache: true
+batch_size: 1
+dtype: bfloat16
+attention_implementation: sdpa
+bootstrap_seed: 42
+bootstrap_repetitions: 10000
+transformers_version: 4.45.2

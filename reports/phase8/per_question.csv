@@ -1,0 +1,361 @@
+method,budget,question_id,stratum,correct,gpu_seconds,timing_scope
+confidence P8,256,9,5+,True,1.1487061767578124,LLaDA decode-only full sampler
+confidence P8,256,30,3-4,False,1.1440728759765626,LLaDA decode-only full sampler
+confidence P8,256,118,3-4,True,1.4804600830078125,LLaDA decode-only full sampler
+confidence P8,256,122,5+,False,1.1487783203125,LLaDA decode-only full sampler
+confidence P8,256,157,5+,False,1.5195975341796877,LLaDA decode-only full sampler
+confidence P8,256,158,3-4,False,1.1467723388671875,LLaDA decode-only full sampler
+confidence P8,256,205,3-4,False,1.48824462890625,LLaDA decode-only full sampler
+confidence P8,256,211,0-2,True,1.147984619140625,LLaDA decode-only full sampler
+confidence P8,256,214,0-2,False,1.1500811767578123,LLaDA decode-only full sampler
+confidence P8,256,218,5+,False,1.1445867919921875,LLaDA decode-only full sampler
+confidence P8,256,244,0-2,False,1.4815428466796876,LLaDA decode-only full sampler
+confidence P8,256,246,5+,False,1.4887891845703125,LLaDA decode-only full sampler
+confidence P8,256,249,5+,False,1.478396484375,LLaDA decode-only full sampler
+confidence P8,256,256,5+,True,1.147196044921875,LLaDA decode-only full sampler
+confidence P8,256,268,3-4,False,1.14655224609375,LLaDA decode-only full sampler
+confidence P8,256,298,3-4,False,1.4817314453125,LLaDA decode-only full sampler
+confidence P8,256,353,5+,False,1.480031494140625,LLaDA decode-only full sampler
+confidence P8,256,412,0-2,True,1.4793626708984375,LLaDA decode-only full sampler
+confidence P8,256,442,5+,False,1.4814266357421877,LLaDA decode-only full sampler
+confidence P8,256,468,5+,False,1.1480692138671875,LLaDA decode-only full sampler
+confidence P8,256,484,0-2,True,1.1489334716796875,LLaDA decode-only full sampler
+confidence P8,256,490,0-2,True,1.1471270751953124,LLaDA decode-only full sampler
+confidence P8,256,499,0-2,False,1.5208370361328123,LLaDA decode-only full sampler
+confidence P8,256,521,3-4,False,1.4813525390625,LLaDA decode-only full sampler
+confidence P8,256,544,0-2,True,1.053769287109375,LLaDA decode-only full sampler
+confidence P8,256,549,0-2,True,1.146999755859375,LLaDA decode-only full sampler
+confidence P8,256,561,3-4,True,1.1454384765625,LLaDA decode-only full sampler
+confidence P8,256,584,5+,False,1.1480626220703125,LLaDA decode-only full sampler
+confidence P8,256,603,5+,True,1.1496279296875,LLaDA decode-only full sampler
+confidence P8,256,604,3-4,True,1.149875,LLaDA decode-only full sampler
+confidence P8,256,618,5+,True,1.1495489501953124,LLaDA decode-only full sampler
+confidence P8,256,641,5+,False,1.146125244140625,LLaDA decode-only full sampler
+confidence P8,256,674,3-4,False,1.145462646484375,LLaDA decode-only full sampler
+confidence P8,256,677,0-2,True,1.525538818359375,LLaDA decode-only full sampler
+confidence P8,256,682,0-2,False,1.4807664794921875,LLaDA decode-only full sampler
+confidence P8,256,695,0-2,True,1.1458133544921876,LLaDA decode-only full sampler
+confidence P8,256,709,5+,False,1.147310302734375,LLaDA decode-only full sampler
+confidence P8,256,711,3-4,False,1.1479925537109374,LLaDA decode-only full sampler
+confidence P8,256,759,0-2,True,1.146301025390625,LLaDA decode-only full sampler
+confidence P8,256,791,3-4,True,1.1464481201171874,LLaDA decode-only full sampler
+confidence P8,256,795,3-4,True,1.149906982421875,LLaDA decode-only full sampler
+confidence P8,256,811,0-2,False,1.4859287109375,LLaDA decode-only full sampler
+confidence P8,256,831,5+,False,1.48755322265625,LLaDA decode-only full sampler
+confidence P8,256,837,3-4,True,1.5298192138671876,LLaDA decode-only full sampler
+confidence P8,256,855,0-2,False,1.147022216796875,LLaDA decode-only full sampler
+confidence P8,256,883,0-2,True,1.480406982421875,LLaDA decode-only full sampler
+confidence P8,256,908,3-4,True,1.1433497314453125,LLaDA decode-only full sampler
+confidence P8,256,926,5+,True,1.52971826171875,LLaDA decode-only full sampler
+confidence P8,256,933,3-4,False,1.47834228515625,LLaDA decode-only full sampler
+confidence P8,256,964,0-2,True,1.147560302734375,LLaDA decode-only full sampler
+confidence P8,256,975,3-4,False,1.14482177734375,LLaDA decode-only full sampler
+confidence P8,256,1007,3-4,False,1.1463900146484376,LLaDA decode-only full sampler
+confidence P8,256,1050,0-2,False,1.146481689453125,LLaDA decode-only full sampler
+confidence P8,256,1060,3-4,True,1.1489462890625,LLaDA decode-only full sampler
+confidence P8,256,1152,0-2,True,1.1461923828125,LLaDA decode-only full sampler
+confidence P8,256,1165,5+,False,1.4801119384765624,LLaDA decode-only full sampler
+confidence P8,256,1186,3-4,False,1.144021484375,LLaDA decode-only full sampler
+confidence P8,256,1215,5+,False,1.522479248046875,LLaDA decode-only full sampler
+confidence P8,256,1235,0-2,False,1.47874072265625,LLaDA decode-only full sampler
+confidence P8,256,1251,5+,True,1.4795731201171876,LLaDA decode-only full sampler
+Confidence + random revision,256,9,5+,True,1.1760030517578124,LLaDA decode-only full sampler
+Confidence + random revision,256,30,3-4,False,1.171879150390625,LLaDA decode-only full sampler
+Confidence + random revision,256,118,3-4,True,1.5052557373046875,LLaDA decode-only full sampler
+Confidence + random revision,256,122,5+,False,1.17620947265625,LLaDA decode-only full sampler
+Confidence + random revision,256,157,5+,False,1.5456905517578126,LLaDA decode-only full sampler
+Confidence + random revision,256,158,3-4,True,1.1738485107421874,LLaDA decode-only full sampler
+Confidence + random revision,256,205,3-4,True,1.514757568359375,LLaDA decode-only full sampler
+Confidence + random revision,256,211,0-2,True,1.5597056884765623,LLaDA decode-only full sampler
+Confidence + random revision,256,214,0-2,False,1.179394287109375,LLaDA decode-only full sampler
+Confidence + random revision,256,218,5+,False,1.172052001953125,LLaDA decode-only full sampler
+Confidence + random revision,256,244,0-2,False,1.5123013916015624,LLaDA decode-only full sampler
+Confidence + random revision,256,246,5+,False,1.515762451171875,LLaDA decode-only full sampler
+Confidence + random revision,256,249,5+,False,1.505593017578125,LLaDA decode-only full sampler
+Confidence + random revision,256,256,5+,True,1.1761558837890624,LLaDA decode-only full sampler
+Confidence + random revision,256,268,3-4,False,1.174581298828125,LLaDA decode-only full sampler
+Confidence + random revision,256,298,3-4,False,1.5076597900390625,LLaDA decode-only full sampler
+Confidence + random revision,256,353,5+,False,1.5065535888671877,LLaDA decode-only full sampler
+Confidence + random revision,256,412,0-2,True,1.5083846435546877,LLaDA decode-only full sampler
+Confidence + random revision,256,442,5+,False,1.5082203369140623,LLaDA decode-only full sampler
+Confidence + random revision,256,468,5+,True,1.1761077880859374,LLaDA decode-only full sampler
+Confidence + random revision,256,484,0-2,True,1.17870068359375,LLaDA decode-only full sampler
+Confidence + random revision,256,490,0-2,True,1.17654296875,LLaDA decode-only full sampler
+Confidence + random revision,256,499,0-2,False,1.5492215576171875,LLaDA decode-only full sampler
+Confidence + random revision,256,521,3-4,False,1.5067191162109377,LLaDA decode-only full sampler
+Confidence + random revision,256,544,0-2,True,1.0833138427734377,LLaDA decode-only full sampler
+Confidence + random revision,256,549,0-2,False,1.176205322265625,LLaDA decode-only full sampler
+Confidence + random revision,256,561,3-4,True,1.172788818359375,LLaDA decode-only full sampler
+Confidence + random revision,256,584,5+,False,1.17582470703125,LLaDA decode-only full sampler
+Confidence + random revision,256,603,5+,False,1.177001708984375,LLaDA decode-only full sampler
+Confidence + random revision,256,604,3-4,True,1.17583251953125,LLaDA decode-only full sampler
+Confidence + random revision,256,618,5+,True,1.1769677734375,LLaDA decode-only full sampler
+Confidence + random revision,256,641,5+,False,1.174466064453125,LLaDA decode-only full sampler
+Confidence + random revision,256,674,3-4,True,1.173258056640625,LLaDA decode-only full sampler
+Confidence + random revision,256,677,0-2,True,1.5568353271484374,LLaDA decode-only full sampler
+Confidence + random revision,256,682,0-2,False,1.510794189453125,LLaDA decode-only full sampler
+Confidence + random revision,256,695,0-2,True,1.17565576171875,LLaDA decode-only full sampler
+Confidence + random revision,256,709,5+,False,1.1750643310546875,LLaDA decode-only full sampler
+Confidence + random revision,256,711,3-4,False,1.17625146484375,LLaDA decode-only full sampler
+Confidence + random revision,256,759,0-2,True,1.1759632568359375,LLaDA decode-only full sampler
+Confidence + random revision,256,791,3-4,False,1.174685546875,LLaDA decode-only full sampler
+Confidence + random revision,256,795,3-4,True,1.1768843994140623,LLaDA decode-only full sampler
+Confidence + random revision,256,811,0-2,False,1.5114862060546874,LLaDA decode-only full sampler
+Confidence + random revision,256,831,5+,False,1.513973388671875,LLaDA decode-only full sampler
+Confidence + random revision,256,837,3-4,False,1.55635009765625,LLaDA decode-only full sampler
+Confidence + random revision,256,855,0-2,False,1.174196533203125,LLaDA decode-only full sampler
+Confidence + random revision,256,883,0-2,True,1.504751953125,LLaDA decode-only full sampler
+Confidence + random revision,256,908,3-4,True,1.1715374755859376,LLaDA decode-only full sampler
+Confidence + random revision,256,926,5+,True,1.5574090576171875,LLaDA decode-only full sampler
+Confidence + random revision,256,933,3-4,True,1.50448828125,LLaDA decode-only full sampler
+Confidence + random revision,256,964,0-2,True,1.1743687744140625,LLaDA decode-only full sampler
+Confidence + random revision,256,975,3-4,False,1.1729002685546874,LLaDA decode-only full sampler
+Confidence + random revision,256,1007,3-4,True,1.1747205810546877,LLaDA decode-only full sampler
+Confidence + random revision,256,1050,0-2,False,1.174284423828125,LLaDA decode-only full sampler
+Confidence + random revision,256,1060,3-4,True,1.17638037109375,LLaDA decode-only full sampler
+Confidence + random revision,256,1152,0-2,True,1.1740806884765624,LLaDA decode-only full sampler
+Confidence + random revision,256,1165,5+,False,1.5071898193359374,LLaDA decode-only full sampler
+Confidence + random revision,256,1186,3-4,False,1.1717076416015626,LLaDA decode-only full sampler
+Confidence + random revision,256,1215,5+,False,1.5537926025390625,LLaDA decode-only full sampler
+Confidence + random revision,256,1235,0-2,False,1.5035426025390626,LLaDA decode-only full sampler
+Confidence + random revision,256,1251,5+,False,1.5080291748046877,LLaDA decode-only full sampler
+left_to_right P4,256,9,5+,True,2.30252587890625,LLaDA decode-only full sampler
+left_to_right P4,256,30,3-4,True,2.29464208984375,LLaDA decode-only full sampler
+left_to_right P4,256,118,3-4,True,2.965429443359375,LLaDA decode-only full sampler
+left_to_right P4,256,122,5+,False,2.302582275390625,LLaDA decode-only full sampler
+left_to_right P4,256,157,5+,False,3.043675048828125,LLaDA decode-only full sampler
+left_to_right P4,256,158,3-4,True,2.2986962890625,LLaDA decode-only full sampler
+left_to_right P4,256,205,3-4,False,2.980984619140625,LLaDA decode-only full sampler
+left_to_right P4,256,211,0-2,True,2.298666259765625,LLaDA decode-only full sampler
+left_to_right P4,256,214,0-2,True,2.306099365234375,LLaDA decode-only full sampler
+left_to_right P4,256,218,5+,True,2.29396630859375,LLaDA decode-only full sampler
+left_to_right P4,256,244,0-2,True,2.968936767578125,LLaDA decode-only full sampler
+left_to_right P4,256,246,5+,True,2.982682373046875,LLaDA decode-only full sampler
+left_to_right P4,256,249,5+,False,2.9615,LLaDA decode-only full sampler
+left_to_right P4,256,256,5+,True,2.298716552734375,LLaDA decode-only full sampler
+left_to_right P4,256,268,3-4,True,2.29805859375,LLaDA decode-only full sampler
+left_to_right P4,256,298,3-4,True,2.968933837890625,LLaDA decode-only full sampler
+left_to_right P4,256,353,5+,False,2.9651552734375,LLaDA decode-only full sampler
+left_to_right P4,256,412,0-2,True,2.96433056640625,LLaDA decode-only full sampler
+left_to_right P4,256,442,5+,True,2.967734619140625,LLaDA decode-only full sampler
+left_to_right P4,256,468,5+,False,2.301150146484375,LLaDA decode-only full sampler
+left_to_right P4,256,484,0-2,True,2.304268798828125,LLaDA decode-only full sampler
+left_to_right P4,256,490,0-2,True,2.3012255859375,LLaDA decode-only full sampler
+left_to_right P4,256,499,0-2,True,3.048278076171875,LLaDA decode-only full sampler
+left_to_right P4,256,521,3-4,True,2.967853271484375,LLaDA decode-only full sampler
+left_to_right P4,256,544,0-2,True,2.112108154296875,LLaDA decode-only full sampler
+left_to_right P4,256,549,0-2,True,2.298994140625,LLaDA decode-only full sampler
+left_to_right P4,256,561,3-4,True,2.295516357421875,LLaDA decode-only full sampler
+left_to_right P4,256,584,5+,False,2.300460205078125,LLaDA decode-only full sampler
+left_to_right P4,256,603,5+,False,2.304593505859375,LLaDA decode-only full sampler
+left_to_right P4,256,604,3-4,True,2.3050810546875,LLaDA decode-only full sampler
+left_to_right P4,256,618,5+,True,2.304183349609375,LLaDA decode-only full sampler
+left_to_right P4,256,641,5+,False,2.29785888671875,LLaDA decode-only full sampler
+left_to_right P4,256,674,3-4,True,2.2960498046875,LLaDA decode-only full sampler
+left_to_right P4,256,677,0-2,False,3.057657470703125,LLaDA decode-only full sampler
+left_to_right P4,256,682,0-2,True,2.96700927734375,LLaDA decode-only full sampler
+left_to_right P4,256,695,0-2,False,2.2975166015625,LLaDA decode-only full sampler
+left_to_right P4,256,709,5+,True,2.299272705078125,LLaDA decode-only full sampler
+left_to_right P4,256,711,3-4,False,2.3015693359375,LLaDA decode-only full sampler
+left_to_right P4,256,759,0-2,False,2.298394775390625,LLaDA decode-only full sampler
+left_to_right P4,256,791,3-4,True,2.29807666015625,LLaDA decode-only full sampler
+left_to_right P4,256,795,3-4,True,2.30515576171875,LLaDA decode-only full sampler
+left_to_right P4,256,811,0-2,True,2.977255859375,LLaDA decode-only full sampler
+left_to_right P4,256,831,5+,False,2.97984521484375,LLaDA decode-only full sampler
+left_to_right P4,256,837,3-4,False,3.064132568359375,LLaDA decode-only full sampler
+left_to_right P4,256,855,0-2,False,2.29945166015625,LLaDA decode-only full sampler
+left_to_right P4,256,883,0-2,False,2.96692578125,LLaDA decode-only full sampler
+left_to_right P4,256,908,3-4,True,2.291968017578125,LLaDA decode-only full sampler
+left_to_right P4,256,926,5+,True,3.064057373046875,LLaDA decode-only full sampler
+left_to_right P4,256,933,3-4,True,2.9613515625,LLaDA decode-only full sampler
+left_to_right P4,256,964,0-2,False,2.299869873046875,LLaDA decode-only full sampler
+left_to_right P4,256,975,3-4,True,2.29429345703125,LLaDA decode-only full sampler
+left_to_right P4,256,1007,3-4,True,2.29789697265625,LLaDA decode-only full sampler
+left_to_right P4,256,1050,0-2,False,2.298780517578125,LLaDA decode-only full sampler
+left_to_right P4,256,1060,3-4,True,2.302501220703125,LLaDA decode-only full sampler
+left_to_right P4,256,1152,0-2,True,2.29797021484375,LLaDA decode-only full sampler
+left_to_right P4,256,1165,5+,False,2.964538330078125,LLaDA decode-only full sampler
+left_to_right P4,256,1186,3-4,True,2.29336376953125,LLaDA decode-only full sampler
+left_to_right P4,256,1215,5+,False,3.04905615234375,LLaDA decode-only full sampler
+left_to_right P4,256,1235,0-2,False,2.963166259765625,LLaDA decode-only full sampler
+left_to_right P4,256,1251,5+,False,2.9649033203125,LLaDA decode-only full sampler
+left_to_right P1,256,9,5+,True,9.1688759765625,LLaDA decode-only full sampler
+left_to_right P1,256,30,3-4,True,9.1333046875,LLaDA decode-only full sampler
+left_to_right P1,256,118,3-4,True,11.8170048828125,LLaDA decode-only full sampler
+left_to_right P1,256,122,5+,False,9.1674599609375,LLaDA decode-only full sampler
+left_to_right P1,256,157,5+,False,12.1406650390625,LLaDA decode-only full sampler
+left_to_right P1,256,158,3-4,True,9.15129296875,LLaDA decode-only full sampler
+left_to_right P1,256,205,3-4,True,11.8814296875,LLaDA decode-only full sampler
+left_to_right P1,256,211,0-2,True,9.4423798828125,LLaDA decode-only full sampler
+left_to_right P1,256,214,0-2,False,9.1757685546875,LLaDA decode-only full sampler
+left_to_right P1,256,218,5+,True,9.1291640625,LLaDA decode-only full sampler
+left_to_right P1,256,244,0-2,True,11.8405390625,LLaDA decode-only full sampler
+left_to_right P1,256,246,5+,True,11.8953974609375,LLaDA decode-only full sampler
+left_to_right P1,256,249,5+,True,11.7966416015625,LLaDA decode-only full sampler
+left_to_right P1,256,256,5+,True,9.1618544921875,LLaDA decode-only full sampler
+left_to_right P1,256,268,3-4,True,9.150865234375,LLaDA decode-only full sampler
+left_to_right P1,256,298,3-4,False,11.82880859375,LLaDA decode-only full sampler
+left_to_right P1,256,353,5+,True,11.8162578125,LLaDA decode-only full sampler
+left_to_right P1,256,412,0-2,True,11.7956650390625,LLaDA decode-only full sampler
+left_to_right P1,256,442,5+,True,11.8341572265625,LLaDA decode-only full sampler
+left_to_right P1,256,468,5+,False,9.16511328125,LLaDA decode-only full sampler
+left_to_right P1,256,484,0-2,True,9.159982421875,LLaDA decode-only full sampler
+left_to_right P1,256,490,0-2,True,9.1456962890625,LLaDA decode-only full sampler
+left_to_right P1,256,499,0-2,True,12.142826171875,LLaDA decode-only full sampler
+left_to_right P1,256,521,3-4,True,11.8256337890625,LLaDA decode-only full sampler
+left_to_right P1,256,544,0-2,True,8.406232421875,LLaDA decode-only full sampler
+left_to_right P1,256,549,0-2,True,9.1476962890625,LLaDA decode-only full sampler
+left_to_right P1,256,561,3-4,True,9.1396240234375,LLaDA decode-only full sampler
+left_to_right P1,256,584,5+,False,9.168298828125,LLaDA decode-only full sampler
+left_to_right P1,256,603,5+,False,9.165525390625,LLaDA decode-only full sampler
+left_to_right P1,256,604,3-4,True,9.1695703125,LLaDA decode-only full sampler
+left_to_right P1,256,618,5+,True,9.1690498046875,LLaDA decode-only full sampler
+left_to_right P1,256,641,5+,False,9.14535546875,LLaDA decode-only full sampler
+left_to_right P1,256,674,3-4,True,9.137375,LLaDA decode-only full sampler
+left_to_right P1,256,677,0-2,False,12.1886171875,LLaDA decode-only full sampler
+left_to_right P1,256,682,0-2,False,11.8183271484375,LLaDA decode-only full sampler
+left_to_right P1,256,695,0-2,True,9.1383154296875,LLaDA decode-only full sampler
+left_to_right P1,256,709,5+,True,9.15616796875,LLaDA decode-only full sampler
+left_to_right P1,256,711,3-4,True,9.16565625,LLaDA decode-only full sampler
+left_to_right P1,256,759,0-2,True,9.1402919921875,LLaDA decode-only full sampler
+left_to_right P1,256,791,3-4,False,9.145111328125,LLaDA decode-only full sampler
+left_to_right P1,256,795,3-4,True,9.17159765625,LLaDA decode-only full sampler
+left_to_right P1,256,811,0-2,False,11.8559013671875,LLaDA decode-only full sampler
+left_to_right P1,256,831,5+,False,11.881990234375,LLaDA decode-only full sampler
+left_to_right P1,256,837,3-4,True,12.2169375,LLaDA decode-only full sampler
+left_to_right P1,256,855,0-2,True,9.145498046875,LLaDA decode-only full sampler
+left_to_right P1,256,883,0-2,True,11.813701171875,LLaDA decode-only full sampler
+left_to_right P1,256,908,3-4,True,9.1293525390625,LLaDA decode-only full sampler
+left_to_right P1,256,926,5+,False,12.2305078125,LLaDA decode-only full sampler
+left_to_right P1,256,933,3-4,True,11.7982939453125,LLaDA decode-only full sampler
+left_to_right P1,256,964,0-2,True,9.14978125,LLaDA decode-only full sampler
+left_to_right P1,256,975,3-4,True,9.1376650390625,LLaDA decode-only full sampler
+left_to_right P1,256,1007,3-4,True,9.1442568359375,LLaDA decode-only full sampler
+left_to_right P1,256,1050,0-2,True,9.1417939453125,LLaDA decode-only full sampler
+left_to_right P1,256,1060,3-4,True,9.1665888671875,LLaDA decode-only full sampler
+left_to_right P1,256,1152,0-2,False,9.1414501953125,LLaDA decode-only full sampler
+left_to_right P1,256,1165,5+,True,11.8174052734375,LLaDA decode-only full sampler
+left_to_right P1,256,1186,3-4,True,9.12483203125,LLaDA decode-only full sampler
+left_to_right P1,256,1215,5+,False,12.1871064453125,LLaDA decode-only full sampler
+left_to_right P1,256,1235,0-2,False,11.7969951171875,LLaDA decode-only full sampler
+left_to_right P1,256,1251,5+,True,11.8134111328125,LLaDA decode-only full sampler
+Qwen-256,256,9,5+,True,5.67381884765625,Qwen prefill + native cached decode
+Qwen-256,256,30,3-4,False,5.77856787109375,Qwen prefill + native cached decode
+Qwen-256,256,118,3-4,False,5.79584814453125,Qwen prefill + native cached decode
+Qwen-256,256,122,5+,False,5.783908203125,Qwen prefill + native cached decode
+Qwen-256,256,157,5+,False,5.79565771484375,Qwen prefill + native cached decode
+Qwen-256,256,158,3-4,True,4.64889208984375,Qwen prefill + native cached decode
+Qwen-256,256,205,3-4,False,5.788306640625,Qwen prefill + native cached decode
+Qwen-256,256,211,0-2,True,6.55566357421875,Qwen prefill + native cached decode
+Qwen-256,256,214,0-2,False,5.77424755859375,Qwen prefill + native cached decode
+Qwen-256,256,218,5+,False,5.78553662109375,Qwen prefill + native cached decode
+Qwen-256,256,244,0-2,False,5.77279541015625,Qwen prefill + native cached decode
+Qwen-256,256,246,5+,False,5.8046572265625,Qwen prefill + native cached decode
+Qwen-256,256,249,5+,False,5.7875869140625,Qwen prefill + native cached decode
+Qwen-256,256,256,5+,False,5.7888212890625,Qwen prefill + native cached decode
+Qwen-256,256,268,3-4,True,5.48471630859375,Qwen prefill + native cached decode
+Qwen-256,256,298,3-4,False,5.78050537109375,Qwen prefill + native cached decode
+Qwen-256,256,353,5+,False,5.78498193359375,Qwen prefill + native cached decode
+Qwen-256,256,412,0-2,True,3.358035400390625,Qwen prefill + native cached decode
+Qwen-256,256,442,5+,True,5.2275556640625,Qwen prefill + native cached decode
+Qwen-256,256,468,5+,True,5.6040712890625,Qwen prefill + native cached decode
+Qwen-256,256,484,0-2,True,4.46160107421875,Qwen prefill + native cached decode
+Qwen-256,256,490,0-2,True,3.71562353515625,Qwen prefill + native cached decode
+Qwen-256,256,499,0-2,False,5.7898017578125,Qwen prefill + native cached decode
+Qwen-256,256,521,3-4,True,4.725375,Qwen prefill + native cached decode
+Qwen-256,256,544,0-2,True,4.43026806640625,Qwen prefill + native cached decode
+Qwen-256,256,549,0-2,True,5.589853515625,Qwen prefill + native cached decode
+Qwen-256,256,561,3-4,False,5.77141650390625,Qwen prefill + native cached decode
+Qwen-256,256,584,5+,False,5.785248046875,Qwen prefill + native cached decode
+Qwen-256,256,603,5+,False,5.7851865234375,Qwen prefill + native cached decode
+Qwen-256,256,604,3-4,True,5.37725390625,Qwen prefill + native cached decode
+Qwen-256,256,618,5+,False,5.7872060546875,Qwen prefill + native cached decode
+Qwen-256,256,641,5+,False,5.78108740234375,Qwen prefill + native cached decode
+Qwen-256,256,674,3-4,True,5.0037314453125,Qwen prefill + native cached decode
+Qwen-256,256,677,0-2,True,3.25072021484375,Qwen prefill + native cached decode
+Qwen-256,256,682,0-2,True,5.33119189453125,Qwen prefill + native cached decode
+Qwen-256,256,695,0-2,True,4.79702392578125,Qwen prefill + native cached decode
+Qwen-256,256,709,5+,False,5.78746728515625,Qwen prefill + native cached decode
+Qwen-256,256,711,3-4,True,5.7813369140625,Qwen prefill + native cached decode
+Qwen-256,256,759,0-2,True,4.52950341796875,Qwen prefill + native cached decode
+Qwen-256,256,791,3-4,True,5.26180517578125,Qwen prefill + native cached decode
+Qwen-256,256,795,3-4,True,5.1920625,Qwen prefill + native cached decode
+Qwen-256,256,811,0-2,False,5.78635302734375,Qwen prefill + native cached decode
+Qwen-256,256,831,5+,False,5.7927255859375,Qwen prefill + native cached decode
+Qwen-256,256,837,3-4,False,5.79789453125,Qwen prefill + native cached decode
+Qwen-256,256,855,0-2,False,5.773552734375,Qwen prefill + native cached decode
+Qwen-256,256,883,0-2,True,5.1296015625,Qwen prefill + native cached decode
+Qwen-256,256,908,3-4,True,4.26050634765625,Qwen prefill + native cached decode
+Qwen-256,256,926,5+,False,5.7934013671875,Qwen prefill + native cached decode
+Qwen-256,256,933,3-4,True,4.29440234375,Qwen prefill + native cached decode
+Qwen-256,256,964,0-2,True,3.31055517578125,Qwen prefill + native cached decode
+Qwen-256,256,975,3-4,True,5.7518232421875,Qwen prefill + native cached decode
+Qwen-256,256,1007,3-4,True,4.37802978515625,Qwen prefill + native cached decode
+Qwen-256,256,1050,0-2,False,4.32205859375,Qwen prefill + native cached decode
+Qwen-256,256,1060,3-4,False,5.78697265625,Qwen prefill + native cached decode
+Qwen-256,256,1152,0-2,False,5.782755859375,Qwen prefill + native cached decode
+Qwen-256,256,1165,5+,False,5.7899638671875,Qwen prefill + native cached decode
+Qwen-256,256,1186,3-4,True,4.64671142578125,Qwen prefill + native cached decode
+Qwen-256,256,1215,5+,False,5.79195263671875,Qwen prefill + native cached decode
+Qwen-256,256,1235,0-2,False,5.77906787109375,Qwen prefill + native cached decode
+Qwen-256,256,1251,5+,False,5.787255859375,Qwen prefill + native cached decode
+Qwen-512,512,9,5+,True,5.521564453125,Qwen prefill + native cached decode
+Qwen-512,512,30,3-4,True,5.80624462890625,Qwen prefill + native cached decode
+Qwen-512,512,118,3-4,True,5.70522900390625,Qwen prefill + native cached decode
+Qwen-512,512,122,5+,True,6.8120009765625,Qwen prefill + native cached decode
+Qwen-512,512,157,5+,False,6.8535634765625,Qwen prefill + native cached decode
+Qwen-512,512,158,3-4,True,4.5287998046875,Qwen prefill + native cached decode
+Qwen-512,512,205,3-4,False,10.003046875,Qwen prefill + native cached decode
+Qwen-512,512,211,0-2,True,6.01777001953125,Qwen prefill + native cached decode
+Qwen-512,512,214,0-2,False,11.1110283203125,Qwen prefill + native cached decode
+Qwen-512,512,218,5+,True,8.346076171875,Qwen prefill + native cached decode
+Qwen-512,512,244,0-2,True,7.97530615234375,Qwen prefill + native cached decode
+Qwen-512,512,246,5+,True,6.19230810546875,Qwen prefill + native cached decode
+Qwen-512,512,249,5+,True,7.99219970703125,Qwen prefill + native cached decode
+Qwen-512,512,256,5+,True,7.26754248046875,Qwen prefill + native cached decode
+Qwen-512,512,268,3-4,True,5.34375341796875,Qwen prefill + native cached decode
+Qwen-512,512,298,3-4,False,7.89903955078125,Qwen prefill + native cached decode
+Qwen-512,512,353,5+,True,7.7747744140625,Qwen prefill + native cached decode
+Qwen-512,512,412,0-2,True,3.278923828125,Qwen prefill + native cached decode
+Qwen-512,512,442,5+,True,5.0982353515625,Qwen prefill + native cached decode
+Qwen-512,512,468,5+,True,5.45607470703125,Qwen prefill + native cached decode
+Qwen-512,512,484,0-2,True,4.3597861328125,Qwen prefill + native cached decode
+Qwen-512,512,490,0-2,True,3.628469970703125,Qwen prefill + native cached decode
+Qwen-512,512,499,0-2,True,5.83460107421875,Qwen prefill + native cached decode
+Qwen-512,512,521,3-4,True,4.60458544921875,Qwen prefill + native cached decode
+Qwen-512,512,544,0-2,True,4.32740380859375,Qwen prefill + native cached decode
+Qwen-512,512,549,0-2,True,5.44864306640625,Qwen prefill + native cached decode
+Qwen-512,512,561,3-4,True,5.7131337890625,Qwen prefill + native cached decode
+Qwen-512,512,584,5+,True,7.82287744140625,Qwen prefill + native cached decode
+Qwen-512,512,603,5+,True,7.62317919921875,Qwen prefill + native cached decode
+Qwen-512,512,604,3-4,True,5.23651171875,Qwen prefill + native cached decode
+Qwen-512,512,618,5+,True,7.67896630859375,Qwen prefill + native cached decode
+Qwen-512,512,641,5+,False,6.78278466796875,Qwen prefill + native cached decode
+Qwen-512,512,674,3-4,True,4.875958984375,Qwen prefill + native cached decode
+Qwen-512,512,677,0-2,True,3.176305908203125,Qwen prefill + native cached decode
+Qwen-512,512,682,0-2,True,5.1967646484375,Qwen prefill + native cached decode
+Qwen-512,512,695,0-2,True,4.68035498046875,Qwen prefill + native cached decode
+Qwen-512,512,709,5+,True,9.5133046875,Qwen prefill + native cached decode
+Qwen-512,512,711,3-4,False,6.87360888671875,Qwen prefill + native cached decode
+Qwen-512,512,759,0-2,True,4.41817822265625,Qwen prefill + native cached decode
+Qwen-512,512,791,3-4,True,5.11873681640625,Qwen prefill + native cached decode
+Qwen-512,512,795,3-4,True,5.06407421875,Qwen prefill + native cached decode
+Qwen-512,512,811,0-2,True,6.213091796875,Qwen prefill + native cached decode
+Qwen-512,512,831,5+,False,7.4718515625,Qwen prefill + native cached decode
+Qwen-512,512,837,3-4,True,6.66670654296875,Qwen prefill + native cached decode
+Qwen-512,512,855,0-2,True,8.8424697265625,Qwen prefill + native cached decode
+Qwen-512,512,883,0-2,True,4.9932060546875,Qwen prefill + native cached decode
+Qwen-512,512,908,3-4,True,4.1455048828125,Qwen prefill + native cached decode
+Qwen-512,512,926,5+,True,11.199298828125,Qwen prefill + native cached decode
+Qwen-512,512,933,3-4,True,4.184537109375,Qwen prefill + native cached decode
+Qwen-512,512,964,0-2,True,3.233591064453125,Qwen prefill + native cached decode
+Qwen-512,512,975,3-4,True,5.6028486328125,Qwen prefill + native cached decode
+Qwen-512,512,1007,3-4,True,4.26795751953125,Qwen prefill + native cached decode
+Qwen-512,512,1050,0-2,False,4.2177607421875,Qwen prefill + native cached decode
+Qwen-512,512,1060,3-4,True,7.06081591796875,Qwen prefill + native cached decode
+Qwen-512,512,1152,0-2,True,5.84697998046875,Qwen prefill + native cached decode
+Qwen-512,512,1165,5+,False,7.25844091796875,Qwen prefill + native cached decode
+Qwen-512,512,1186,3-4,True,4.527208984375,Qwen prefill + native cached decode
+Qwen-512,512,1215,5+,True,8.279419921875,Qwen prefill + native cached decode
+Qwen-512,512,1235,0-2,True,8.92649609375,Qwen prefill + native cached decode
+Qwen-512,512,1251,5+,False,8.18106298828125,Qwen prefill + native cached decode

@@ -7,7 +7,7 @@ from statistics import mean, median
 import numpy as np
 from dllm_unmasking.analyze_phase7 import write_csv
 from dllm_unmasking.phase2_data import atomic_json
-from dllm_unmasking.ar_baseline import MODEL, model_spec
+from dllm_unmasking.ar_baseline import MODEL, model_spec, budget_label
 
 FRONTIER = ('confidence P8', 'Confidence + random revision', 'left_to_right P4', 'left_to_right P1')
 
@@ -29,6 +29,9 @@ def baseline(cfg, questions):
 
 
 def summarize(out, records, questions, cfg):
+    cap = cfg['max_new_tokens']; comparison = budget_label(cap)
+    if any(r.get('max_new_tokens', 256) != cap for r in records.values()):
+        raise ValueError('Never pool records from different token budgets')
     model = cfg['model']; policy = model_spec(model)['policy']
     if any(r.get('model', MODEL) != model or r['policy'] != policy or r.get('model_revision', cfg['model_revision']) != cfg['model_revision'] for r in records.values()):
         raise ValueError('Never pool or relabel records from different AR models')
@@ -37,12 +40,12 @@ def summarize(out, records, questions, cfg):
         atomic_json(out / 'completion.json', dict(n_completed=0, expected=60, complete=False))
         return
     rows = [records[q] for q in ids]
-    csv_rows = [{k: v for k, v in r.items() if k not in ('generated_token_ids', 'rendered_prompt')} for r in rows]
+    csv_rows = [dict(max_new_tokens=cap, comparison_kind=comparison, **{k: v for k, v in r.items() if k not in ('generated_token_ids', 'rendered_prompt', 'max_new_tokens')} ) for r in rows]
     write_csv(out / 'results.csv', csv_rows)
     summary = []
     for stratum in ('all', '0-2', '3-4', '5+'):
         rs = [r for r in rows if stratum == 'all' or r['stratum'] == stratum]
-        row = dict(model=model, model_revision=cfg['model_revision'], stratum=stratum, n=len(rs), expected_n=60 if stratum == 'all' else 20,
+        row = dict(max_new_tokens=cap, comparison_kind=comparison, model=model, model_revision=cfg['model_revision'], stratum=stratum, n=len(rs), expected_n=60 if stratum == 'all' else 20,
                    correct=sum(r['correct'] for r in rs), accuracy=mean(r['correct'] for r in rs) if rs else None,
                    extraction_failures=sum(r['extraction_failed'] for r in rs),
                    final_answer_markers=sum('####' in r['response'] for r in rs),
@@ -69,7 +72,7 @@ def summarize(out, records, questions, cfg):
             if len(values):
                 draws += rng.choice(values, size=(len(draws), len(values)), replace=True).sum(axis=1)
         low, high = np.quantile(draws * 100 / len(ids), [.025, .975], method='linear')
-        paired.append(dict(diffusion=method, ar=policy, ar_model=model, model_revision=cfg['model_revision'], n_matched=len(ids), expected_n=60,
+        paired.append(dict(max_new_tokens=cap, diffusion_token_budget=256, comparison_kind=comparison, diffusion=method, ar=policy, ar_model=model, model_revision=cfg['model_revision'], n_matched=len(ids), expected_n=60,
                            diffusion_correct=sum(groups[method][q]['correct'] for q in ids), ar_correct=sum(r['correct'] for r in rows),
                            ar_minus_diffusion_pp=float(differences.mean() * 100), recovered=recovered, regressed=regressed,
                            mcnemar_exact_p=p, bootstrap_95_low_pp=float(low), bootstrap_95_high_pp=float(high)))
@@ -80,12 +83,12 @@ def summarize(out, records, questions, cfg):
     latency = []
     for q in ids:
         r = records[q]
-        latency.append(dict(question_id=q, method=policy, observed_gpu_seconds=r['gpu_prefill_decode_seconds'],
+        latency.append(dict(max_new_tokens=cap, comparison_kind=comparison, question_id=q, method=policy, observed_gpu_seconds=r['gpu_prefill_decode_seconds'],
                             observed_wall_seconds=r['generation_wall_seconds'], generated_tokens=r['generated_tokens'],
                             diffusion_forward_passes=None, scope='AR native generate including prefill and generation scheduling; excludes loading/tokenization', directly_comparable=False))
         for method in FRONTIER:
             p = 256 if method.endswith('P1') else 64 if method.endswith('P4') else 32
-            latency.append(dict(question_id=q, method=method, observed_gpu_seconds=groups[method][q]['gpu_seconds'],
+            latency.append(dict(max_new_tokens=256, comparison_kind=comparison, question_id=q, method=method, observed_gpu_seconds=groups[method][q]['gpu_seconds'],
                                 observed_wall_seconds=groups[method][q]['wall_seconds'], generated_tokens=None,
                                 diffusion_forward_passes=p, scope='Historical diffusion full sampler stream interval; no autoregressive prefill equivalent', directly_comparable=False))
     write_csv(out / 'latency_comparison.csv', latency)

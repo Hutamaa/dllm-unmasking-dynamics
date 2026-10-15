@@ -1,0 +1,7 @@
+budget,subset,n,correct,mean_generated_tokens,eos,length_limited,final_markers,parser_fallbacks,extraction_failures
+256,all,60,28,235.13333333333333,28,32,34,26,5
+256,length_limited,32,1,256,0,32,6,26,5
+256,eos,28,27,211.28571428571428,28,0,28,0,0
+512,all,60,50,282.8833333333333,60,0,60,0,1
+512,length_limited,0,0,,0,0,0,0,0
+512,eos,60,50,282.8833333333333,60,0,60,0,1

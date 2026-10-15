@@ -44,10 +44,30 @@ def object_hash(value):
     return hashlib.sha256(json.dumps(value, sort_keys=True, allow_nan=False).encode()).hexdigest()
 
 
+def budget_label(cap):
+    return 'matched_256' if cap == 256 else 'extended_budget_512'
+
+
+def validate_budget(cfg):
+    cap = cfg['max_new_tokens']
+    if type(cap) is not int or cap not in (256, 512):
+        raise ValueError('Only the matched 256 and Qwen sensitivity 512 budgets are supported')
+    if cap == 512:
+        if cfg['model'] != 'Qwen/Qwen2.5-7B-Instruct':
+            raise ValueError('The 512-token sensitivity experiment is Qwen-only')
+        out = Path(cfg['output_dir']).resolve()
+        reserved = (repository_root() / 'outputs/phase8/qwen_512').resolve()
+        historical = (repository_root() / 'outputs/phase8/qwen').resolve()
+        if not out.is_relative_to(reserved) or out == historical or out.is_relative_to(historical) or historical.is_relative_to(out):
+            raise ValueError('512-token outputs must be isolated under outputs/phase8/qwen_512')
+    return cap
+
+
 def inputs(cfg):
     model_spec(cfg['model'])
-    if (cfg['max_new_tokens'], cfg['do_sample'], cfg['use_cache'], cfg['batch_size'], cfg['dtype']) != (256, False, True, 1, 'bfloat16'):
-        raise ValueError('Require the specified model, greedy AR baseline controls, BF16, batch one and 256-token cap')
+    validate_budget(cfg)
+    if (cfg['do_sample'], cfg['use_cache'], cfg['batch_size'], cfg['dtype']) != (False, True, 1, 'bfloat16'):
+        raise ValueError('Require the specified model, greedy AR baseline controls, BF16, batch one and an explicit supported token cap')
     if cfg['inference_seed'] != 42 or cfg['prompt_suffix'] != "\nSolve this problem step by step. End with '#### <final numerical answer>'.":
         raise ValueError('Exact historical seed and instruction suffix required')
     if not re.fullmatch('[0-9a-f]{40}', cfg['model_revision']):
@@ -263,7 +283,9 @@ def generate_one(model, tokenizer, encoded, eos_ids, cap=256):
         pre.remove(); post.remove()
 
 
-def validate_result(result, question, run_hash, require_gpu=True, model=MODEL, revision=None):
+def validate_result(result, question, run_hash, require_gpu=True, model=MODEL, revision=None, cap=256):
+    if result.get('max_new_tokens', 256) != cap:
+        raise ValueError('Saved result token-budget mismatch')
     if result.get('model', MODEL) != model or (revision is not None and result.get('model_revision') != revision):
         raise ValueError('Saved result model/revision mismatch')
     if result['question_id'] != question['question_id'] or result['stratum'] != question['stratum'] or result['run_hash'] != run_hash or result['policy'] != model_spec(model)['policy']:
@@ -275,10 +297,10 @@ def validate_result(result, question, run_hash, require_gpu=True, model=MODEL, r
     if result['inference_seed'] != 42 or result['calculation_count'] != question['calculation_count']:
         raise ValueError('Saved seed/complexity metadata mismatch')
     ids = result['generated_token_ids']; n = result['generated_tokens']; eos = result['eos_token_ids']
-    if type(n) is not int or not 1 <= n <= 256 or n != len(ids) or any(type(t) is not int or t < 0 for t in ids):
+    if type(n) is not int or not 1 <= n <= cap or n != len(ids) or any(type(t) is not int or t < 0 for t in ids):
         raise ValueError('Invalid output token count')
     stop = next((i for i, t in enumerate(ids) if t in eos), None)
-    if (stop is not None and stop != n - 1) or (stop is None and n != 256):
+    if (stop is not None and stop != n - 1) or (stop is None and n != cap):
         raise ValueError('Invalid stopping semantics')
     if result['termination'] != ('eos' if stop is not None else 'length_limit') or result['response_tokens'] != n - (stop is not None):
         raise ValueError('Invalid termination metadata')
@@ -297,7 +319,7 @@ def validate_result(result, question, run_hash, require_gpu=True, model=MODEL, r
         raise ValueError('Invalid prompt length')
 
 
-def read_journal(path, questions, run_hash, repair=False, require_gpu=True, model=MODEL, revision=None):
+def read_journal(path, questions, run_hash, repair=False, require_gpu=True, model=MODEL, revision=None, cap=256):
     records = {}; pending = set(); qmap = {q['question_id']: q for q in questions}
     path = Path(path)
     if not path.exists():
@@ -312,6 +334,8 @@ def read_journal(path, questions, run_hash, repair=False, require_gpu=True, mode
                     raise ValueError('Partial journal append; resume owning runner to repair')
                 file.truncate(offset); file.flush(); os.fsync(file.fileno()); break
             event = json.loads(line); qid = event['question_id']
+            if event.get('max_new_tokens', 256) != cap:
+                raise ValueError('Journal token-budget mismatch')
             if revision is not None and event.get('model_revision') != revision:
                 raise ValueError('Journal model revision mismatch')
             if qid not in qmap or event['run_hash'] != run_hash or event['policy'] != model_spec(model)['policy'] or event.get('model', MODEL) != model or qid in records:
@@ -319,7 +343,7 @@ def read_journal(path, questions, run_hash, repair=False, require_gpu=True, mode
             if event['event'] == 'started':
                 pending.add(qid)
             elif event['event'] == 'completed' and qid in pending:
-                validate_result(event['result'], qmap[qid], run_hash, require_gpu, model, revision)
+                validate_result(event['result'], qmap[qid], run_hash, require_gpu, model, revision, cap)
                 records[qid] = event['result']; pending.remove(qid)
             else:
                 raise ValueError('Corrupt completion or unknown journal event')

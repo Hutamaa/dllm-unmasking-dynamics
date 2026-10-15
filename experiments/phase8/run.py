@@ -106,7 +106,7 @@ def main():
         raise SystemExit('Inference requires a PBS GPU allocation; use --check-cache locally')
     if not saved.exists():
         atomic_json(saved, manifest)
-    records = read_journal(out/'journal.jsonl', questions, run_hash, repair=not args.summarize, model=model_id, revision=pin['revision'])
+    records = read_journal(out/'journal.jsonl', questions, run_hash, repair=not args.summarize, model=model_id, revision=pin['revision'], cap=cfg['max_new_tokens'])
     summarize(out, records, questions, cfg)
     if args.summarize or len(records) == 60:
         print(f'{len(records)}/60 validated completed evaluations'); return
@@ -146,19 +146,19 @@ def main():
                 continue
             seed = cfg['inference_seed']
             random.seed(seed); torch.manual_seed(seed); torch.cuda.manual_seed_all(seed)
-            header = dict(question_id=qid, policy=policy, run_hash=run_hash, model=model_id, model_revision=pin['revision'])
+            header = dict(question_id=qid, policy=policy, run_hash=run_hash, model=model_id, model_revision=pin['revision'], max_new_tokens=cfg['max_new_tokens'])
             append_event(journal, dict(event='started', **header))
             text, encoded = prompt_inputs(tokenizer, q['question'], cfg['prompt_suffix'])
             encoded = {k:v.to('cuda') for k,v in encoded.items()}
-            if encoded['input_ids'].shape[1]+256 > model.config.max_position_embeddings:
+            if encoded['input_ids'].shape[1]+cfg['max_new_tokens'] > model.config.max_position_embeddings:
                 raise ValueError('Context limit exceeded; no truncation permitted')
-            result = generate_one(model, tokenizer, encoded, eos)
+            result = generate_one(model, tokenizer, encoded, eos, cap=cfg['max_new_tokens'])
             predicted, method = extract_answer(result['response']); gold = extract_answer(q['gold_answer'], gold=True)[0]
             result.update(**header, stratum=q['stratum'], calculation_count=q['calculation_count'], inference_seed=seed,
                           gold_numeric=gold, predicted_numeric=predicted, extraction_method=method,
                           extraction_failed=predicted is None, correct=predicted==gold,
                           eos_token_ids=eos, prompt_tokens=encoded['input_ids'].shape[1], rendered_prompt=text)
-            validate_result(result, q, run_hash, model=model_id, revision=pin['revision'])
+            validate_result(result, q, run_hash, model=model_id, revision=pin['revision'], cap=cfg['max_new_tokens'])
             append_event(journal, dict(event='completed', result=result, **header))
             records[qid] = result; summarize(out, records, questions, cfg)
             print(f'Phase 8 {policy}: {len(records)}/60 completed; correct={sum(r["correct"] for r in records.values())}/{len(records)}', flush=True)

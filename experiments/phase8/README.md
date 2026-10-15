@@ -2,8 +2,9 @@
 
 **Default: Qwen2.5-7B-Instruct. Optional: Llama 3.1 8B Instruct, pending gated access.**
 Both use the same unchanged 60-question GSM8K benchmark and AR generation procedure.
-No AR accuracy or GPU timing has been measured during implementation. Comparison
-with LLaDA is system-level: architecture, training, tokenizer and instruction tuning
+Completed Qwen-256 and Qwen-512 results are in the
+[canonical Phase 8 report](../../reports/phase8/PHASE8_REPORT.md). Llama remains
+unevaluated. Comparison with LLaDA is system-level: architecture, training, tokenizer and instruction tuning
 all differ. Differences cannot be attributed causally to diffusion versus AR.
 
 ## Models, revisions and isolated outputs
@@ -258,3 +259,30 @@ with `directly_comparable=False`; cached AR forward counts are never equated to
 diffusion forward passes. CPU tests cover native-template call contracts and
 synthetic ChatML/special-token fixtures; they do not certify a downloaded tokenizer
 or real CUDA model load. Those checks remain user-run after explicit download.
+
+A separate [Qwen 512-token sensitivity experiment](QWEN_512.md) preserves the
+completed matched-256 run and documents explicit PBS configuration selection.
+
+
+## Completed Phase 8 analysis
+
+The [canonical report](../../reports/phase8/PHASE8_REPORT.md) incorporates the
+completed Qwen-256 and Qwen-512 runs. Raw journals remain isolated and private.
+To verify public statistics without raw data:
+
+```bash
+python -m dllm_unmasking.finalize_phase8 --verify-public
+```
+
+To repeat raw verification, restore the original selection and Qwen model pin,
+keep downloaded Qwen runs in their configured directories, and point to the
+parent of the downloaded Phase 2, 5 and 6 directories:
+
+```bash
+python -m dllm_unmasking.finalize_phase8 --diffusion-root "$DIFFUSION_RESULTS_ROOT" --output-dir results/phase8_recheck
+```
+
+This imports byte-verified snapshots without modifying the original runs and
+regenerates summaries, paired tests, figures and report in a separate directory.
+Historical per-run bootstrap tables remain preserved; the canonical report uses
+a versioned analysis with an independent seed-42 bootstrap stream per contrast.

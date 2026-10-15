@@ -1,0 +1,19 @@
+method,stratum,n,correct,accuracy_pct
+confidence P8,0-2,20,12,60.0
+confidence P8,3-4,20,8,40.0
+confidence P8,5+,20,6,30.0
+Confidence + random revision,0-2,20,11,55.00000000000001
+Confidence + random revision,3-4,20,11,55.00000000000001
+Confidence + random revision,5+,20,5,25.0
+left_to_right P4,0-2,20,12,60.0
+left_to_right P4,3-4,20,17,85.0
+left_to_right P4,5+,20,8,40.0
+left_to_right P1,0-2,20,14,70.0
+left_to_right P1,3-4,20,18,90.0
+left_to_right P1,5+,20,11,55.00000000000001
+Qwen-256,0-2,20,12,60.0
+Qwen-256,3-4,20,13,65.0
+Qwen-256,5+,20,3,15.0
+Qwen-512,0-2,20,18,90.0
+Qwen-512,3-4,20,17,85.0
+Qwen-512,5+,20,15,75.0

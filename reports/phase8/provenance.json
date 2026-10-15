@@ -1,0 +1,146 @@
+{
+  "analysis_version": 1,
+  "model": "Qwen/Qwen2.5-7B-Instruct",
+  "model_revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+  "dataset_revision": "740312add88f781978c0658806c59bc2815b9866",
+  "selection_sha256": "5eb7681ca76a0ed61d7fe55296e9cf9a8aacfb8f802971abd9b5894e9992a45c",
+  "diffusion_sha256": "7becac59d217b799b3f6360ade8c1ecd1a901b4d0900e3c777eeac3d23a537f4",
+  "imports": {
+    "256": {
+      "completion.json": "23acea2fcc8b864c371e105e897796b89b12ff04afec94f95ecd003bf80ac295",
+      "environment.json": "d4f56a0b1585dbf9e46643ccee9e5d0a734c38d7d8673bfc7065c26ff6e9932a",
+      "journal.jsonl": "0697d47ca1f4cbc0d028b782d7d741231c1075e347b59d42a7975ea939cb7b76",
+      "latency_comparison.csv": "b2052b562a9a6fa8b23532eccbe712e448b521d009821591575df7f44e40c97a",
+      "manifest.json": "3b993834130ef87a1bb5662c2746649bc0aa4b0838971fd4230caba31a3f930d",
+      "paired_diffusion.csv": "950da38c1af59fd72fb3ebb0f21b162c39547b9e2c470647871f65e1ccd7619d",
+      "results.csv": "24463b79ff33dd2405175e92adac4dd2f82034399ba30b3ac3250efa7f8d5976",
+      "summary.csv": "d59bbd870c66b3b185527e0f0ac1d33a24f34ba4eebcb6f02f3e8c7e7823e081"
+    },
+    "512": {
+      "completion.json": "23acea2fcc8b864c371e105e897796b89b12ff04afec94f95ecd003bf80ac295",
+      "environment.json": "d4f56a0b1585dbf9e46643ccee9e5d0a734c38d7d8673bfc7065c26ff6e9932a",
+      "journal.jsonl": "ffe7b6bb59d4a440459edff592c757d67f0158984bb57a82d50554949ce72591",
+      "latency_comparison.csv": "a1c12102ce88e840859d3cdb4d78eae7d7c84fc688aeb623b0b9137d7b528d2b",
+      "manifest.json": "029b053332677b17084d70be62de3d55e6089e33ac446a15c0fb7a429cd0564a",
+      "paired_diffusion.csv": "eca4b0eae8b8e7c3748f5448d1bfa910bec3ebffa6b4c8bdb9b0b1feb64d71de",
+      "results.csv": "1c3e0c51e77c1db61b88fd8445a271c8ebc4656f69ca624ab5ae2cf79b34d932",
+      "summary.csv": "e7d2dd5879aebbc88ca33d8577f37dc63d2bd60d0a9c065a648e198688ab49ae"
+    }
+  },
+  "diffusion_integrity": [
+    {
+      "check": "confidence P8",
+      "n": 60,
+      "status": "PASS",
+      "journal_sha256": "208fc4abfda3cf83e282f54f141560d93cb69d45874a09fcebbc492a778d2a7d",
+      "manifest_sha256": "2a9ff1770e0129c12cad410342d05b3e413e0cecbd1d8fba467e8f33c6b5f0f1"
+    },
+    {
+      "check": "Confidence + random revision",
+      "n": 60,
+      "status": "PASS",
+      "journal_sha256": "a3fbf12487bf503c8706526ea6f5f8ece59b72984d45ab59270e2c92c67c802f",
+      "manifest_sha256": "09efdbd188d999e355ee1bec18ee4886ecffd4eae0e9e6474fcb4d3054349322"
+    },
+    {
+      "check": "left_to_right P4",
+      "n": 60,
+      "status": "PASS",
+      "journal_sha256": "208fc4abfda3cf83e282f54f141560d93cb69d45874a09fcebbc492a778d2a7d",
+      "manifest_sha256": "2a9ff1770e0129c12cad410342d05b3e413e0cecbd1d8fba467e8f33c6b5f0f1"
+    },
+    {
+      "check": "left_to_right P1",
+      "n": 60,
+      "status": "PASS",
+      "journal_sha256": "9a2a895f9af68c9aca783d89f3d2617896037d34d4b2bacfef02b02e899a9024",
+      "manifest_sha256": "90c2510485a04b025d9ffb9877c60c4db1c12eefa8fc530c7650f69f1ec3171e"
+    }
+  ],
+  "seed": 42,
+  "bootstrap_repetitions": 10000,
+  "bootstrap_generator": "NumPy PCG64; reset seed independently per contrast",
+  "bootstrap_method": "Paired question differences; independently resample 20 questions within each of three strata; linear percentile 2.5/97.5%; pointwise",
+  "mcnemar": "Exact two-sided binomial on discordances; Holm family of nine exploratory report contrasts",
+  "historical_intervals": "Imported paired_diffusion.csv preserved; canonical intervals are a new versioned analysis with independent per-contrast streams",
+  "environments": {
+    "256": {
+      "python": "3.11.17",
+      "torch": "2.11.0+cu128",
+      "cuda": "12.8",
+      "transformers": "4.45.2",
+      "huggingface_hub": "0.30.2",
+      "numpy": "2.4.6",
+      "accelerate": "1.6.0",
+      "tokenizers": "0.20.3",
+      "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+      "attention_implementation": "sdpa",
+      "dtype": "bfloat16"
+    },
+    "512": {
+      "python": "3.11.17",
+      "torch": "2.11.0+cu128",
+      "cuda": "12.8",
+      "transformers": "4.45.2",
+      "huggingface_hub": "0.30.2",
+      "numpy": "2.4.6",
+      "accelerate": "1.6.0",
+      "tokenizers": "0.20.3",
+      "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+      "attention_implementation": "sdpa",
+      "dtype": "bfloat16"
+    }
+  },
+  "analysis_environment": {
+    "python": "3.9.6",
+    "numpy": "2.0.2",
+    "matplotlib": "3.9.4"
+  },
+  "inference_source_verification": {
+    "256": {
+      "experiments/phase8/run.py": "local Git commit 014409d2c03e440fe7e5855de9e8b3668276d621",
+      "src/dllm_unmasking/ar_baseline.py": "local Git commit 014409d2c03e440fe7e5855de9e8b3668276d621",
+      "src/dllm_unmasking/ar_analysis.py": "local Git commit 014409d2c03e440fe7e5855de9e8b3668276d621",
+      "src/dllm_unmasking/evaluation.py": "current source matches recorded hash",
+      "src/dllm_unmasking/phase2_data.py": "current source matches recorded hash",
+      "src/dllm_unmasking/analyze_phase7.py": "current source matches recorded hash",
+      "src/dllm_unmasking/layout.py": "current source matches recorded hash"
+    },
+    "512": {
+      "experiments/phase8/run.py": "current source matches recorded hash",
+      "src/dllm_unmasking/ar_baseline.py": "current source matches recorded hash",
+      "src/dllm_unmasking/ar_analysis.py": "current source matches recorded hash",
+      "src/dllm_unmasking/evaluation.py": "current source matches recorded hash",
+      "src/dllm_unmasking/phase2_data.py": "current source matches recorded hash",
+      "src/dllm_unmasking/analyze_phase7.py": "current source matches recorded hash",
+      "src/dllm_unmasking/layout.py": "current source matches recorded hash"
+    }
+  },
+  "source_sha256": {
+    "src/dllm_unmasking/finalize_phase8.py": "63533b39ea43cadc2dc6b2201269c801f12b5213efedb1d54b338f31f8e6be47",
+    "src/dllm_unmasking/ar_baseline.py": "634e3101bcd8b774c53362b5c96d98212276f1090f3f8d1cc57ea0fce458fc60",
+    "src/dllm_unmasking/ar_compare.py": "e94bfb013e25fa86e3008e3b295d8b9dd47bf96f91045c2baaee361fe0bb6c5b",
+    "src/dllm_unmasking/ar_analysis.py": "8bf5e60e3b699928604a5ad421a888594f3cca3c4f7560c17ee81eddd1c9c257",
+    "src/dllm_unmasking/evaluation.py": "154db29bbca4b53d4101725c0fd5581ad4d0091fc564204f3667e98ffe3196b6"
+  },
+  "original_inference_source_sha256": {
+    "256": {
+      "experiments/phase8/run.py": "2d080213c1a88ba0e405a321c4ef6611606e488fcb139488246955a2713f250d",
+      "src/dllm_unmasking/ar_baseline.py": "cb82a7eb4fa34a9455859fb556ab66267fe6cbb374a206ca3dc641125dc38eb7",
+      "src/dllm_unmasking/ar_analysis.py": "2d40b867dd035282e04b6704e594268426a2beade4cc28f2f705d93d97240643",
+      "src/dllm_unmasking/evaluation.py": "154db29bbca4b53d4101725c0fd5581ad4d0091fc564204f3667e98ffe3196b6",
+      "src/dllm_unmasking/phase2_data.py": "6472086b597d95bb0a1cad6a2ef9c4a88c91112debc5b3c66233538efbb9eb71",
+      "src/dllm_unmasking/analyze_phase7.py": "7d3c34ac62cf7b17e83fd9e0da8a62164741013266ae6dea0517dc879d612984",
+      "src/dllm_unmasking/layout.py": "e70a1b2c4e9c3342126b411c1973fcae5d4fe846772565d0086b7f1bfae7e7b5"
+    },
+    "512": {
+      "experiments/phase8/run.py": "d189042124e38d7c0412acafc76262d5acb549d1922f0a0add171608b386fad5",
+      "src/dllm_unmasking/ar_baseline.py": "634e3101bcd8b774c53362b5c96d98212276f1090f3f8d1cc57ea0fce458fc60",
+      "src/dllm_unmasking/ar_analysis.py": "8bf5e60e3b699928604a5ad421a888594f3cca3c4f7560c17ee81eddd1c9c257",
+      "src/dllm_unmasking/evaluation.py": "154db29bbca4b53d4101725c0fd5581ad4d0091fc564204f3667e98ffe3196b6",
+      "src/dllm_unmasking/phase2_data.py": "6472086b597d95bb0a1cad6a2ef9c4a88c91112debc5b3c66233538efbb9eb71",
+      "src/dllm_unmasking/analyze_phase7.py": "7d3c34ac62cf7b17e83fd9e0da8a62164741013266ae6dea0517dc879d612984",
+      "src/dllm_unmasking/layout.py": "e70a1b2c4e9c3342126b411c1973fcae5d4fe846772565d0086b7f1bfae7e7b5"
+    }
+  }
+}

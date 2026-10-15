@@ -1,0 +1,7 @@
+method,family,budget,n,correct,accuracy_pct,mean_gpu_seconds,timing_scope
+confidence P8,LLaDA,256,60,26,43.333333333333336,1.2837180013020832,LLaDA decode-only full sampler
+Confidence + random revision,LLaDA,256,60,27,45.0,1.3178380594889323,LLaDA decode-only full sampler
+left_to_right P4,LLaDA,256,60,37,61.66666666666667,2.572615303548177,LLaDA decode-only full sampler
+left_to_right P1,LLaDA,256,60,43,71.66666666666667,10.250551090494792,LLaDA decode-only full sampler
+Qwen-256,Qwen,256,60,28,46.666666666666664,5.324408711751302,Qwen prefill + native cached decode
+Qwen-512,Qwen,512,60,50,83.33333333333334,6.234682678222656,Qwen prefill + native cached decode

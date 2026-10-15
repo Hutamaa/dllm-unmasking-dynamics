@@ -19,6 +19,7 @@ exec > >(tee -a "outputs/phase8/logs/job-${PBS_JOBID}.log") 2>&1
 python -c 'import experiments.phase8.run, dllm_unmasking.ar_baseline, dllm_unmasking.ar_analysis'
 model="${PHASE8_MODEL:-qwen}"
 case "$model" in qwen|llama) ;; *) echo 'Invalid PHASE8_MODEL'; exit 1 ;; esac
+# Sensitivity run: export PHASE8_CONFIG=configs/phase8_qwen_512.yaml and pass it via qsub -v.
 args=(--model "$model")
 if [[ -n "${PHASE8_CONFIG:-}" ]]; then args+=(--config "$PHASE8_CONFIG"); fi
 python -u -m experiments.phase8.run "${args[@]}" --check-cache
