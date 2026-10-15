@@ -1,0 +1,25 @@
+#!/bin/bash
+#PBS -N ar-phase8
+#PBS -q gpu_bwp6000
+#PBS -l select=1:ncpus=4:mem=64gb:ngpus=1
+#PBS -l walltime=04:00:00
+#PBS -j oe
+# Supply the private allocation explicitly via qsub -P "$PBS_PROJECT".
+set -eo pipefail
+cd "${PBS_O_WORKDIR:?Submit from the repository root}"
+module load anaconda2025/2025-gpu
+source "$(conda info --base)/etc/profile.d/conda.sh"
+conda activate "${PHASE8_ENV:-dllm-ar-baseline}"
+: "${HF_HOME:?Keep the established scratch cache convention}"
+: "${PHASE8_HUB_CACHE:?Use a separate AR model Hub cache}"
+export HF_HOME PHASE8_HUB_CACHE HF_HUB_OFFLINE=1 HF_DATASETS_OFFLINE=1 TRANSFORMERS_OFFLINE=1
+export OMP_NUM_THREADS=4 TOKENIZERS_PARALLELISM=false CUBLAS_WORKSPACE_CONFIG=:4096:8
+mkdir -p outputs/phase8/logs
+exec > >(tee -a "outputs/phase8/logs/job-${PBS_JOBID}.log") 2>&1
+python -c 'import experiments.phase8.run, dllm_unmasking.ar_baseline, dllm_unmasking.ar_analysis'
+model="${PHASE8_MODEL:-qwen}"
+case "$model" in qwen|llama) ;; *) echo 'Invalid PHASE8_MODEL'; exit 1 ;; esac
+args=(--model "$model")
+if [[ -n "${PHASE8_CONFIG:-}" ]]; then args+=(--config "$PHASE8_CONFIG"); fi
+python -u -m experiments.phase8.run "${args[@]}" --check-cache
+python -u -m experiments.phase8.run "${args[@]}"

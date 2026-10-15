@@ -128,6 +128,7 @@ first. No downloads or job submissions are performed by the CPU quick start.
 | Phase 3 | [Spaced schedule](experiments/phase3/README.md), [schedule definition](src/dllm_unmasking/phase3_schedule.py) |
 | Phases 4 / 5 | [Spaced revision](experiments/phase4/README.md), [confidence revision](experiments/phase5/README.md) |
 | Phase 6 | [Matched sequential benchmark](experiments/phase6/README.md), [runner](experiments/phase6/run.py), [analysis](src/dllm_unmasking/analyze_phase6.py) |
+| Phase 8 | [Matched autoregressive baseline](experiments/phase8/README.md), [runner](experiments/phase8/run.py); Qwen2.5 default; Llama optional; no measured AR results |
 | Evaluation / tests | [Unchanged extractor](src/dllm_unmasking/evaluation.py), [test guide](docs/REPRODUCIBILITY.md#cpu-tests), [dependency map](docs/PROJECT_MAP.md) |
 
 Scientific modules live in `src/dllm_unmasking/`; phase runners and PBS templates
