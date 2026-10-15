@@ -230,3 +230,11 @@ weights are intentionally not redistributed. No missing required result artifact
 or observed aggregate discrepancy was found. Raw journals, environments and full
 responses remain ignored private artifacts. Public outputs contain only compact
 metrics, question IDs, sanitized reproducibility metadata and figures.
+
+
+## Supplementary Phase 8.5 analysis
+
+[Phase 8.5 — Reasoning Budget Utilization Analysis](../phase8_5/PHASE8_5_REPORT.md)
+studies answer placement, output length, parser effects and the existing Qwen
+continuations. It adds no inference experiment and does not change Phase 8 results.
+Phase 9 is reserved for a future Qwen-256 concise-reasoning intervention.

@@ -1,0 +1,96 @@
+{
+  "phase": "8.5",
+  "analysis_version": 1,
+  "observational": true,
+  "model_revisions": {
+    "LLaDA LTR P4": "852152c60bdfed4632635bfcf3e83408ad3f65bf",
+    "Qwen-256": "a09a35458c702b33eeacc393d103063234e8bc28",
+    "Qwen-512": "a09a35458c702b33eeacc393d103063234e8bc28"
+  },
+  "phase8_provenance_sha256": "0e17d03a469ce40f9dbe499eca89012edae52af56bf613149acb3a575052c3dc",
+  "selection_sha256": "5eb7681ca76a0ed61d7fe55296e9cf9a8aacfb8f802971abd9b5894e9992a45c",
+  "input_artifacts": {
+    "LLaDA LTR P4": {
+      "manifest.json": "2a9ff1770e0129c12cad410342d05b3e413e0cecbd1d8fba467e8f33c6b5f0f1",
+      "journal.jsonl": "208fc4abfda3cf83e282f54f141560d93cb69d45874a09fcebbc492a778d2a7d"
+    },
+    "Qwen-256": {
+      "manifest.json": "3b993834130ef87a1bb5662c2746649bc0aa4b0838971fd4230caba31a3f930d",
+      "journal.jsonl": "0697d47ca1f4cbc0d028b782d7d741231c1075e347b59d42a7975ea939cb7b76"
+    },
+    "Qwen-512": {
+      "manifest.json": "029b053332677b17084d70be62de3d55e6089e33ac446a15c0fb7a429cd0564a",
+      "journal.jsonl": "ffe7b6bb59d4a440459edff592c757d67f0158984bb57a82d50554949ce72591"
+    }
+  },
+  "tokenizers": {
+    "qwen": {
+      "verification": "Exact tokenizer JSON/config SHA256 matches both historical model manifests",
+      "files": {
+        "tokenizer.json": "c0382117ea329cdf097041132f6d735924b697924d6f6fc3945713e96ce87539",
+        "tokenizer_config.json": "5b5d4f65d0acd3b2d56a35b56d374a36cbc1c8fa5cf3b3febbbfabf22f359583",
+        "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910",
+        "merges.txt": "599bab54075088774b1733fde865d5bd747cbcc7a547c5bc12610e874e26f5e3"
+      }
+    },
+    "llada": {
+      "verification": "Historical manifest has no tokenizer checksum; local ByteLevel vocabulary exactly reproduces all 60 raw and visible response sequences; revision identity of tokenizer asset not independently authenticated",
+      "files": {
+        "tokenizer.json": "071eb20fe7bd601550b1b7838ff696d6c93b88f51257f753303d3df23163c381",
+        "tokenizer_config.json": "b9a6102c39a4f42f47f0d63fc6cee58a2381199d90f2a4f39b3f6871f32b4119"
+      }
+    }
+  },
+  "exact_decoder_checks": {
+    "LLaDA LTR P4": {
+      "n": 60,
+      "raw_and_visible_match": 60,
+      "strict_utf8_offsets": 60
+    },
+    "Qwen-256": {
+      "n": 60,
+      "raw_and_visible_match": 60,
+      "strict_utf8_offsets": 60
+    },
+    "Qwen-512": {
+      "n": 60,
+      "raw_and_visible_match": 60,
+      "strict_utf8_offsets": 60
+    }
+  },
+  "bootstrap": {
+    "repetitions": 10000,
+    "seed": 42,
+    "generator": "NumPy PCG64 reset per contrast",
+    "method": "Paired question differences, resample within gold calculation strata; linear percentile 2.5/97.5; pointwise. Both-correct subsets resample their observed stratum sizes. Length contrasts are exploratory, no multiplicity-adjusted intervals."
+  },
+  "environment": {
+    "python": "3.9.6",
+    "numpy": "2.0.2",
+    "matplotlib": "3.9.4"
+  },
+  "source_sha256": {
+    "src/dllm_unmasking/reasoning_budget.py": "93b3927045db4a001047dd1ecac3e8077311fc1a85fe5c14065c9fa8dba12d3c",
+    "src/dllm_unmasking/analyze_phase8_5.py": "2e6c9c5d3a88cb480929a94e229132b9cb7acf4a354c878038a2da468cf73138",
+    "src/dllm_unmasking/evaluation.py": "154db29bbca4b53d4101725c0fd5581ad4d0091fc564204f3667e98ffe3196b6",
+    "src/dllm_unmasking/prepare_ltr_audit.py": "ad1382f21d7b1e1c5fb1f485a631876b13a5fe82a5aa305d259fbab1e49a855a"
+  },
+  "prompt_audit": {
+    "qwen_rendered_prompts_recorded": true,
+    "qwen_default_system_observed": true,
+    "llada_rendered_prompts_not_logged": true,
+    "llada_local_template_available": true,
+    "same_question_and_suffix": true
+  },
+  "limitations": [
+    "Native token counts use different vocabularies",
+    "Output-order prefixes are not causal reasoning steps; LLaDA initially commits groups of four",
+    "Complete numeric-span prefixes use hindsight, not an online stopping rule",
+    "No automatic arithmetic/reasoning-error or parser-bug annotation"
+  ],
+  "naming_cleanup": {
+    "receipt_sha256": "3afd83ad244cd6bd3999f2b4f813a3bc0347e390864c5b8fe14a5759d826b316",
+    "original_provenance_sha256": "0b4f14b7064e310359b538d79629858c970b9a68363e3a74ec22a9d6efb50e13",
+    "scientific_results_unchanged": true
+  }
+}

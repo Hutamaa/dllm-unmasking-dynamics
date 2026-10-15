@@ -1,0 +1,10 @@
+method,subset,n,correct,marker_present,extraction_failures
+LLaDA LTR P4,all,60,37,51,0
+LLaDA LTR P4,eos_observed,60,37,51,0
+LLaDA LTR P4,no_eos,0,0,0,0
+Qwen-256,all,60,28,34,5
+Qwen-256,eos_observed,28,27,28,0
+Qwen-256,no_eos,32,1,6,5
+Qwen-512,all,60,50,60,1
+Qwen-512,eos_observed,60,50,60,1
+Qwen-512,no_eos,0,0,0,0

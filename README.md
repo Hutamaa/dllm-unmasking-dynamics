@@ -168,3 +168,12 @@ statistics, strata, output diagnostics, figures and reproducibility, and the
 [512 deployment guide](experiments/phase8/QWEN_512.md) for the isolated run setup.
 Public-only statistical verification: `python -m dllm_unmasking.finalize_phase8 --verify-public`.
 No Phase 9 experiment has been started.
+
+
+## Phase 8.5: supplementary reasoning-budget analysis
+
+[Reasoning Budget Utilization Analysis](reports/phase8_5/PHASE8_5_REPORT.md)
+examines the existing LLaDA P4 and Qwen-256/512 outputs without new inference.
+Its [validation guide](docs/PHASE8_5_VALIDATION.md) documents reproduction and
+the full local 60-question manual audit. Phase 9 is reserved for a future
+Qwen-256 concise-reasoning intervention; it has not been implemented or run.

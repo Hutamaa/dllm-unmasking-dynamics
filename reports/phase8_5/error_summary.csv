@@ -1,0 +1,12 @@
+flag,n,all_questions,qwen256_errors,nonexclusive
+incorrect,32,60,32,True
+cap_limited,32,60,32,True
+incorrect_and_cap_limited,31,60,32,True
+incorrect_missing_marker,25,60,32,True
+incorrect_with_explicit_wrong_number,2,60,32,True
+incorrect_with_marker_wrong_number,2,60,32,True
+incorrect_extraction_failure,5,60,32,True
+incorrect_ambiguous_answer_role,30,60,32,True
+incorrect_with_gold_elsewhere,10,60,32,True
+incorrect_with_explicit_gold_elsewhere,0,60,32,True
+incomplete_numeric_candidate_at_boundary,7,60,32,True

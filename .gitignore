@@ -47,3 +47,6 @@ run*.local.pbs
 *.egg-info/
 build/
 dist/
+
+# Local tokenizer assets for strictly offline offset analysis.
+local_tokenizers/
