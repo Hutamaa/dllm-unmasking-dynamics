@@ -1,0 +1,19 @@
+model: GSAI-ML/LLaDA-8B-Instruct
+model_revision: 852152c60bdfed4632635bfcf3e83408ad3f65bf
+dataset_revision: 740312add88f781978c0658806c59bc2815b9866
+dataset_test_parquet_sha256: ee7b8da9e381df27b9e3f7758a159ab2bdaa4dbaa910546cbbc47e0cb44e4f59
+selection_seed: 20261014
+inference_seed: 42
+selection_file: outputs/phase2/selection.json
+mask_id: 126336
+dtype: bfloat16
+prompt_suffix: '
+
+  Solve this problem step by step. End with ''#### <final numerical answer>''.'
+policy: ltr_spaced
+gen_length: 256
+block_length: 256
+steps: 32
+parallelism: 8
+phase2_results: outputs/phase2/run
+output_dir: outputs/phase3/run

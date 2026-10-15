@@ -1,0 +1,18 @@
+method,n,unique_questions,complete_60,n_forward_values,forward_passes_per_case
+Confidence + low-conf revision,60,60,True,1,32
+Confidence + random revision,60,60,True,1,32
+LTR spaced + low-conf revision,60,60,True,1,32
+LTR spaced + random revision,60,60,True,1,32
+LTR spaced P8,60,60,True,1,32
+batched_influence P4,60,60,True,1,1064
+batched_influence P8,60,60,True,1,536
+confidence P1,60,60,True,1,256
+confidence P4,60,60,True,1,64
+confidence P8,60,60,True,1,32
+left_to_right P1,60,60,True,1,256
+left_to_right P4,60,60,True,1,64
+left_to_right P8,60,60,True,1,32
+random P4,60,60,True,1,64
+random P8,60,60,True,1,32
+right_to_left P4,60,60,True,1,64
+right_to_left P8,60,60,True,1,32

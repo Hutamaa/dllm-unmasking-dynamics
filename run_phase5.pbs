@@ -1,0 +1,21 @@
+#!/bin/bash
+#PBS -N llada-phase5
+#PBS -P gs_ccds_taisp
+#PBS -q gpu_bwp6000
+#PBS -l select=1:ncpus=4:mem=64gb:ngpus=1
+#PBS -l walltime=04:00:00
+#PBS -j oe
+set -eo pipefail
+cd "${PBS_O_WORKDIR:?Submit from the repository root}"
+module load anaconda2025/2025-gpu
+source "$(conda info --base)/etc/profile.d/conda.sh"
+conda activate dllm-unmasking
+: "${HF_HOME:?Use the existing scratch HF cache}"
+export HF_HOME HF_HUB_OFFLINE=1 HF_DATASETS_OFFLINE=1 TRANSFORMERS_OFFLINE=1
+export OMP_NUM_THREADS=4 TOKENIZERS_PARALLELISM=false CUBLAS_WORKSPACE_CONFIG=:4096:8
+if [[ "${PHASE5_MODE:-full}" != full ]]; then echo 'PHASE5_MODE must be full'; exit 1; fi
+mkdir -p outputs/phase5/logs
+exec > >(tee -a "outputs/phase5/logs/job-${PBS_JOBID}.log") 2>&1
+python -c 'import phase5_sampler, run_phase5, phase2_samplers, phase2_data, run_phase2, evaluation, analyze_phase25, analyze_phase15'
+python -u run_phase5.py --check-cache
+python -u run_phase5.py
