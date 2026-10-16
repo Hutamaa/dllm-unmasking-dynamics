@@ -1,0 +1,452 @@
+{
+  "annotation_type": "Unblinded assistant-assisted case-level textual audit; not independent human review or internal-reasoning labels",
+  "denominator_incorrect": 38,
+  "denominator_all": 60,
+  "categories_overlap": true,
+  "entries": [
+    {
+      "question_id": 118,
+      "tags": [
+        "empty_final_marker",
+        "gold_valued_result_before_empty_marker"
+      ],
+      "evidence_quotes": [
+        "#### <final numerical answer>",
+        "icles  \n20 vehicles \u00f7 5 vehicles/container = 4"
+      ],
+      "assessment": "The preceding reported result matches gold, but no number follows the final marker. This does not certify every reasoning step or establish an implementation bug in the specified extractor."
+    },
+    {
+      "question_id": 122,
+      "tags": [
+        "empty_final_marker",
+        "explicit_false_arithmetic",
+        "constraint_or_unit_mismatch",
+        "missing_required_term_or_conversion"
+      ],
+      "evidence_quotes": [
+        "#### <final numerical answer>",
+        "8 + (6 + 6) + (7 + 7 + 7) = 34"
+      ],
+      "assessment": "The written sum is 41, not 34; it also includes three remaining days where the question specifies four. This is evidence in the text, not a claim about hidden computation."
+    },
+    {
+      "question_id": 157,
+      "tags": [
+        "constraint_or_unit_mismatch",
+        "missing_required_term_or_conversion"
+      ],
+      "evidence_quotes": [
+        "Kelly runs: \\(34 \\times (40 \\times 2) = 2720\\)"
+      ],
+      "assessment": "The displayed Kelly total omits the initial full-field round trip specified in the question. The subsequent subtraction 3000 - 2720 = 280 is locally valid arithmetic, not an arithmetic error."
+    },
+    {
+      "question_id": 158,
+      "tags": [
+        "empty_final_marker",
+        "explicit_false_arithmetic"
+      ],
+      "evidence_quotes": [
+        "#### <final numerical answer>",
+        "4 \u00d7 $1.5 + 2 \u00d7 $4 + $20 = $26"
+      ],
+      "assessment": "The explicitly written expression totals 34, not 26."
+    },
+    {
+      "question_id": 205,
+      "tags": [
+        "constraint_or_unit_mismatch",
+        "missing_required_term_or_conversion",
+        "unsupported_transition_in_text"
+      ],
+      "evidence_quotes": [
+        "The total sum needed for the four highest scores to average 93",
+        "89, 92, 100, and \\( x \\)"
+      ],
+      "assessment": "The output moves from averaging five after one of six tests is removed to averaging four and omits 86 despite already removing 71. The displayed sum 281 and solution 91 are arithmetically consistent with that mistaken setup."
+    },
+    {
+      "question_id": 211,
+      "tags": [
+        "empty_final_marker",
+        "gold_valued_result_before_empty_marker"
+      ],
+      "evidence_quotes": [
+        "#### <final numerical answer>",
+        "2 \\]\n\\[ 8r + 10 = 42 \\]\n\\[ 8r = 32 \\]\n\\[ r = 4"
+      ],
+      "assessment": "The preceding reported result matches gold, but no number follows the final marker. This does not certify every reasoning step or establish an implementation bug in the specified extractor."
+    },
+    {
+      "question_id": 214,
+      "tags": [
+        "no_visible_derivation",
+        "ambiguous_internal_mechanism"
+      ],
+      "evidence_quotes": [
+        "#### 20 gallons"
+      ],
+      "assessment": "The visible response is an incorrect marked answer without a derivation. There is insufficient textual evidence to distinguish skipped calculations, arithmetic error, constraint misunderstanding or another cause."
+    },
+    {
+      "question_id": 246,
+      "tags": [
+        "empty_final_marker",
+        "gold_valued_result_before_empty_marker"
+      ],
+      "evidence_quotes": [
+        "#### <final numerical answer>",
+        "/week \u00d7 5 weeks = $30,000  \n$30,000 \u00d7 90% = $27,000"
+      ],
+      "assessment": "The preceding reported result matches gold, but no number follows the final marker. This does not certify every reasoning step or establish an implementation bug in the specified extractor."
+    },
+    {
+      "question_id": 256,
+      "tags": [
+        "empty_final_marker",
+        "gold_valued_result_before_empty_marker"
+      ],
+      "evidence_quotes": [
+        "#### <final numerical answer>",
+        "mes 0.10 + 40 \\times 1.00 = 1 + 2 + 2 + 40 = 45"
+      ],
+      "assessment": "The preceding reported result matches gold, but no number follows the final marker. This does not certify every reasoning step or establish an implementation bug in the specified extractor."
+    },
+    {
+      "question_id": 268,
+      "tags": [
+        "no_visible_derivation",
+        "ambiguous_internal_mechanism"
+      ],
+      "evidence_quotes": [
+        "#### $505"
+      ],
+      "assessment": "The visible response is an incorrect marked answer without a derivation. There is insufficient textual evidence to distinguish skipped calculations, arithmetic error, constraint misunderstanding or another cause."
+    },
+    {
+      "question_id": 298,
+      "tags": [
+        "no_visible_derivation",
+        "ambiguous_internal_mechanism"
+      ],
+      "evidence_quotes": [
+        "#### 1100"
+      ],
+      "assessment": "The visible response is an incorrect marked answer without a derivation. There is insufficient textual evidence to distinguish skipped calculations, arithmetic error, constraint misunderstanding or another cause."
+    },
+    {
+      "question_id": 353,
+      "tags": [
+        "empty_final_marker",
+        "gold_valued_result_before_empty_marker"
+      ],
+      "evidence_quotes": [
+        "#### <final numerical answer>",
+        " = 50 hours\n\nSightseeing = 40% of 50 hours = 20"
+      ],
+      "assessment": "The preceding reported result matches gold, but no number follows the final marker. This does not certify every reasoning step or establish an implementation bug in the specified extractor."
+    },
+    {
+      "question_id": 412,
+      "tags": [
+        "no_visible_derivation",
+        "ambiguous_internal_mechanism"
+      ],
+      "evidence_quotes": [
+        "#### 6"
+      ],
+      "assessment": "The visible response is an incorrect marked answer without a derivation. There is insufficient textual evidence to distinguish skipped calculations, arithmetic error, constraint misunderstanding or another cause."
+    },
+    {
+      "question_id": 468,
+      "tags": [
+        "empty_final_marker",
+        "explicit_false_arithmetic",
+        "constraint_or_unit_mismatch",
+        "missing_required_term_or_conversion"
+      ],
+      "evidence_quotes": [
+        "#### <final numerical answer>",
+        "200 (initial shoes) + 5 (Monday) + 15 (Wednesday) + 30 (Friday) - 180 (Saturday) = 90"
+      ],
+      "assessment": "The written numbers total 70, not 90. New quantities are pairs in the question but treated as individual shoes; doubling them gives the reference total 120."
+    },
+    {
+      "question_id": 484,
+      "tags": [
+        "no_visible_derivation",
+        "ambiguous_internal_mechanism"
+      ],
+      "evidence_quotes": [
+        "#### 24"
+      ],
+      "assessment": "The visible response is an incorrect marked answer without a derivation. There is insufficient textual evidence to distinguish skipped calculations, arithmetic error, constraint misunderstanding or another cause."
+    },
+    {
+      "question_id": 499,
+      "tags": [
+        "empty_final_marker",
+        "gold_valued_result_before_empty_marker"
+      ],
+      "evidence_quotes": [
+        "#### <final numerical answer>",
+        "00 = 20x \\]\n\nDivide both sides by 20:\n\\[ x = 10"
+      ],
+      "assessment": "The preceding reported result matches gold, but no number follows the final marker. This does not certify every reasoning step or establish an implementation bug in the specified extractor."
+    },
+    {
+      "question_id": 521,
+      "tags": [
+        "parser_selection_effect"
+      ],
+      "evidence_quotes": [
+        "#### 52 - 13 = 39"
+      ],
+      "assessment": "The final marked expression evaluates to 39, matching gold; the unchanged parser selects its first number, 52. This is an evidenced parser/format interaction, not a claim of erroneous arithmetic."
+    },
+    {
+      "question_id": 549,
+      "tags": [
+        "no_visible_derivation",
+        "ambiguous_internal_mechanism"
+      ],
+      "evidence_quotes": [
+        "#### 88"
+      ],
+      "assessment": "The visible response is an incorrect marked answer without a derivation. There is insufficient textual evidence to distinguish skipped calculations, arithmetic error, constraint misunderstanding or another cause."
+    },
+    {
+      "question_id": 561,
+      "tags": [
+        "empty_final_marker",
+        "gold_valued_result_before_empty_marker"
+      ],
+      "evidence_quotes": [
+        "#### <final numerical answer>",
+        "ge weight: (150 + 130 + 260) / 3 = 540 / 3 = 180"
+      ],
+      "assessment": "The preceding reported result matches gold, but no number follows the final marker. This does not certify every reasoning step or establish an implementation bug in the specified extractor."
+    },
+    {
+      "question_id": 584,
+      "tags": [
+        "constraint_or_unit_mismatch",
+        "missing_required_term_or_conversion",
+        "wrong_requested_quantity"
+      ],
+      "evidence_quotes": [
+        "Each contact costs",
+        "#### 1"
+      ],
+      "assessment": "The displayed 1 dollar is per individual contact; the question asks per pair, requiring 2 dollars."
+    },
+    {
+      "question_id": 603,
+      "tags": [
+        "empty_final_marker",
+        "constraint_or_unit_mismatch"
+      ],
+      "evidence_quotes": [
+        "#### <final numerical answer>",
+        "Marissa: \\(60 \\times \\frac{3}{4} = 45"
+      ],
+      "assessment": "The question defines Marissa hourly production as three quarters of Ruiz two-hour amount 120. The output uses his hourly amount 60 instead; the multiplication itself is locally correct."
+    },
+    {
+      "question_id": 604,
+      "tags": [
+        "no_visible_derivation",
+        "ambiguous_internal_mechanism"
+      ],
+      "evidence_quotes": [
+        "#### $28"
+      ],
+      "assessment": "The visible response is an incorrect marked answer without a derivation. There is insufficient textual evidence to distinguish skipped calculations, arithmetic error, constraint misunderstanding or another cause."
+    },
+    {
+      "question_id": 641,
+      "tags": [
+        "empty_final_marker",
+        "constraint_or_unit_mismatch",
+        "unsupported_transition_in_text"
+      ],
+      "evidence_quotes": [
+        "#### <final numerical answer>",
+        "Total monthly income including bonus",
+        "Annual income: $31000 * 12 = $372000"
+      ],
+      "assessment": "The setup repeats the stated promotion bonus every month rather than adding a one-off bonus to annual salary under the reference interpretation. No arithmetic error is inferred from 31000 * 12."
+    },
+    {
+      "question_id": 674,
+      "tags": [
+        "empty_final_marker",
+        "gold_valued_result_before_empty_marker"
+      ],
+      "evidence_quotes": [
+        "#### <final numerical answer>",
+        " \n600 - 240 = 360 inches needed  \n360 / 30 = 12"
+      ],
+      "assessment": "The preceding reported result matches gold, but no number follows the final marker. This does not certify every reasoning step or establish an implementation bug in the specified extractor."
+    },
+    {
+      "question_id": 682,
+      "tags": [
+        "no_visible_derivation",
+        "ambiguous_internal_mechanism"
+      ],
+      "evidence_quotes": [
+        "#### 93.33"
+      ],
+      "assessment": "The visible response is an incorrect marked answer without a derivation. There is insufficient textual evidence to distinguish skipped calculations, arithmetic error, constraint misunderstanding or another cause."
+    },
+    {
+      "question_id": 759,
+      "tags": [
+        "empty_final_marker",
+        "gold_valued_result_before_empty_marker"
+      ],
+      "evidence_quotes": [
+        "#### <final numerical answer>",
+        "0 songs total  \n6000 songs \u00d7 10 hours/song = 60000"
+      ],
+      "assessment": "The preceding reported result matches gold, but no number follows the final marker. This does not certify every reasoning step or establish an implementation bug in the specified extractor."
+    },
+    {
+      "question_id": 791,
+      "tags": [
+        "empty_final_marker",
+        "gold_valued_result_before_empty_marker"
+      ],
+      "evidence_quotes": [
+        "#### <final numerical answer>",
+        "172 - 47 + 13 - 38 = 100"
+      ],
+      "assessment": "The preceding reported result matches gold, but no number follows the final marker. This does not certify every reasoning step or establish an implementation bug in the specified extractor."
+    },
+    {
+      "question_id": 811,
+      "tags": [
+        "parser_selection_effect"
+      ],
+      "evidence_quotes": [
+        "#### 420 branches / 7 days = 60 branches/day"
+      ],
+      "assessment": "The marked expression explicitly gives 60 per day, matching gold, but the first-number parser selects 420. The requested daily rate is visible."
+    },
+    {
+      "question_id": 831,
+      "tags": [
+        "no_visible_derivation",
+        "ambiguous_internal_mechanism"
+      ],
+      "evidence_quotes": [
+        "#### 312"
+      ],
+      "assessment": "The visible response is an incorrect marked answer without a derivation. There is insufficient textual evidence to distinguish skipped calculations, arithmetic error, constraint misunderstanding or another cause."
+    },
+    {
+      "question_id": 837,
+      "tags": [
+        "no_visible_derivation",
+        "ambiguous_internal_mechanism"
+      ],
+      "evidence_quotes": [
+        "#### 320"
+      ],
+      "assessment": "The visible response is an incorrect marked answer without a derivation. There is insufficient textual evidence to distinguish skipped calculations, arithmetic error, constraint misunderstanding or another cause."
+    },
+    {
+      "question_id": 883,
+      "tags": [
+        "empty_final_marker",
+        "gold_valued_result_before_empty_marker"
+      ],
+      "evidence_quotes": [
+        "#### <final numerical answer>",
+        " sides:\n\n\\[ 2x = 50 \\]\n\nDivide by 2:\n\n\\[ x = 25"
+      ],
+      "assessment": "The preceding reported result matches gold, but no number follows the final marker. This does not certify every reasoning step or establish an implementation bug in the specified extractor."
+    },
+    {
+      "question_id": 926,
+      "tags": [
+        "no_visible_derivation",
+        "ambiguous_internal_mechanism"
+      ],
+      "evidence_quotes": [
+        "#### 10"
+      ],
+      "assessment": "The visible response is an incorrect marked answer without a derivation. There is insufficient textual evidence to distinguish skipped calculations, arithmetic error, constraint misunderstanding or another cause."
+    },
+    {
+      "question_id": 975,
+      "tags": [
+        "explicit_false_arithmetic"
+      ],
+      "evidence_quotes": [
+        "Jerry has 30 cherries (60 - 30 - 20)"
+      ],
+      "assessment": "The expression for Jerry gives 10, not the stated 30. The final 10 also disagrees with the requested difference 20; no unseen-reasoning explanation is assigned."
+    },
+    {
+      "question_id": 1007,
+      "tags": [
+        "empty_final_marker",
+        "gold_valued_result_before_empty_marker"
+      ],
+      "evidence_quotes": [
+        "#### <final numerical answer>",
+        "ue) + ((9 + 5) - 3) (yellow) = 9 + 14 + 11 = 34"
+      ],
+      "assessment": "The preceding reported result matches gold, but no number follows the final marker. This does not certify every reasoning step or establish an implementation bug in the specified extractor."
+    },
+    {
+      "question_id": 1050,
+      "tags": [
+        "no_visible_derivation",
+        "ambiguous_internal_mechanism"
+      ],
+      "evidence_quotes": [
+        "#### 1245"
+      ],
+      "assessment": "The visible response is an incorrect marked answer without a derivation. There is insufficient textual evidence to distinguish skipped calculations, arithmetic error, constraint misunderstanding or another cause."
+    },
+    {
+      "question_id": 1186,
+      "tags": [
+        "empty_final_marker",
+        "gold_valued_result_before_empty_marker"
+      ],
+      "evidence_quotes": [
+        "#### <final numerical answer>",
+        "3 + 3 + 3 + 5 + 5 = 19"
+      ],
+      "assessment": "The preceding reported result matches gold, but no number follows the final marker. This does not certify every reasoning step or establish an implementation bug in the specified extractor."
+    },
+    {
+      "question_id": 1215,
+      "tags": [
+        "no_visible_derivation",
+        "ambiguous_internal_mechanism"
+      ],
+      "evidence_quotes": [
+        "#### 100"
+      ],
+      "assessment": "The visible response is an incorrect marked answer without a derivation. There is insufficient textual evidence to distinguish skipped calculations, arithmetic error, constraint misunderstanding or another cause."
+    },
+    {
+      "question_id": 1251,
+      "tags": [
+        "empty_final_marker",
+        "explicit_false_arithmetic"
+      ],
+      "evidence_quotes": [
+        "#### <final numerical answer>",
+        "5 + 10 + 10 + 2.5 + 2.5 = 20 + 5 = 25"
+      ],
+      "assessment": "The displayed five terms sum to 30. The transition to 20 + 5 drops 5 from the first subtotal."
+    }
+  ]
+}

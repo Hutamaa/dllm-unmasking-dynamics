@@ -1,0 +1,11 @@
+category,n,incorrect_denominator,all_denominator,overlapping,annotation_type
+ambiguous_internal_mechanism,13,38,60,True,Unblinded assistant-assisted case-level textual audit; not independent human review or internal-reasoning labels
+constraint_or_unit_mismatch,7,38,60,True,Unblinded assistant-assisted case-level textual audit; not independent human review or internal-reasoning labels
+empty_final_marker,19,38,60,True,Unblinded assistant-assisted case-level textual audit; not independent human review or internal-reasoning labels
+explicit_false_arithmetic,5,38,60,True,Unblinded assistant-assisted case-level textual audit; not independent human review or internal-reasoning labels
+gold_valued_result_before_empty_marker,13,38,60,True,Unblinded assistant-assisted case-level textual audit; not independent human review or internal-reasoning labels
+missing_required_term_or_conversion,5,38,60,True,Unblinded assistant-assisted case-level textual audit; not independent human review or internal-reasoning labels
+no_visible_derivation,13,38,60,True,Unblinded assistant-assisted case-level textual audit; not independent human review or internal-reasoning labels
+parser_selection_effect,2,38,60,True,Unblinded assistant-assisted case-level textual audit; not independent human review or internal-reasoning labels
+unsupported_transition_in_text,2,38,60,True,Unblinded assistant-assisted case-level textual audit; not independent human review or internal-reasoning labels
+wrong_requested_quantity,1,38,60,True,Unblinded assistant-assisted case-level textual audit; not independent human review or internal-reasoning labels

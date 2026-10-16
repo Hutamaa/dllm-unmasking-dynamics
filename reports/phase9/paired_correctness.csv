@@ -1,0 +1,4 @@
+a,b,n,both_correct,both_incorrect,b_recovers,b_regresses,b_minus_a_pp,bootstrap_low_pp,bootstrap_high_pp,mcnemar_exact_p,role,holm_two_secondary_p
+Qwen original-256,Qwen concise-256,60,11,21,11,17,-10.0,-26.666666666666668,6.666666666666667,0.34492845088243484,primary,
+Qwen original-512,Qwen concise-256,60,20,8,2,30,-46.666666666666664,-60.0,-31.666666666666668,2.4633482098579407e-07,exploratory_secondary,4.926696419715881e-07
+LLaDA LTR P4,Qwen concise-256,60,14,15,8,23,-25.0,-41.666666666666664,-8.333333333333334,0.010673840530216694,exploratory_secondary,0.010673840530216694

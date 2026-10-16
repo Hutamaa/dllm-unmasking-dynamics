@@ -14,9 +14,9 @@ from dllm_unmasking.evaluation import extract_answer
 from dllm_unmasking.phase2_data import atomic_json, append_event
 
 
-def main():
+def main(protocol=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--config', help='Phase 8 YAML (default: Qwen config)')
+    parser.add_argument('--config', help='Phase 8 YAML (default: Qwen config)' if protocol is None else 'Fixed Phase 9 concise protocol YAML')
     parser.add_argument('--model', choices=('qwen','llama'), help='Select the corresponding model config')
     modes = parser.add_mutually_exclusive_group()
     modes.add_argument('--check-cache', '--preflight', action='store_true', dest='check_cache')
@@ -26,13 +26,20 @@ def main():
     modes.add_argument('--download-model', action='store_true', help='Explicit USER action only; download the already pinned revision into AR cache')
     modes.add_argument('--summarize', action='store_true', help='CPU rebuild of own derived tables; journal stays read-only')
     args = parser.parse_args()
-    cfg = load_config(args.config, args.model)
+    if protocol is not None and any((args.check_access,args.resolve_revision,args.pin_cached_revision,args.download_model)):
+        parser.error('Phase 9 requires cached files; online access, repinning and downloads are disabled')
+    cfg = (load_config if protocol is None else protocol.load_config)(args.config, args.model)
+    summarize_run = summarize if protocol is None else protocol.summarize
     model_id = cfg['model']; policy = model_spec(model_id)['policy']
-    questions = inputs(cfg); baseline(cfg, questions)
+    questions = (inputs if protocol is None else protocol.inputs)(cfg); baseline(cfg, questions)
     pin_path = Path(cfg['model_pin']); pin = json.loads(pin_path.read_text()) if pin_path.exists() else None
     if pin and (pin['model'] != model_id or pin['revision'] != pin['tokenizer_revision'] or pin['revision'] != cfg['model_revision']):
         raise ValueError('Model/tokenizer pin mismatch')
     if args.check_cache:
+        if protocol is not None:
+            state=cache_check(cfg,pin)
+            if state['status']!='cached_complete' or pin is None:raise SystemExit('Pinned original Qwen cache unavailable; no download or inference')
+            protocol.cache_metadata(cfg,pin,snapshot(cache_root(cfg),pin['revision'],model_id))
         print(json.dumps(dict(model=model_id, questions=60, strata={'0-2':20, '3-4':20, '5+':20}, **cache_check(cfg, pin)), indent=2)); return
     if args.check_access or args.resolve_revision:
         state = check_access(cfg, pin['revision'] if pin else cfg['model_revision'])
@@ -75,11 +82,11 @@ def main():
             raise SystemExit('Downloaded snapshot incomplete; refusing evaluation')
         print('Pinned AR model cached. No inference performed.'); return
     if not complete_snapshot(path, pin.get('file_sizes'), model_id):
-        raise SystemExit('Pinned AR model cache incomplete. No automatic download; use explicit user download step.')
+        raise SystemExit('Pinned AR model cache incomplete; restore the original cache. No download attempted.' if protocol is not None else 'Pinned AR model cache incomplete. No automatic download; use explicit user download step.')
     out = Path(cfg['output_dir']).resolve()
-    allowed = (repository_root() / 'outputs/phase8').resolve()
+    allowed = (repository_root() / ('outputs/phase8' if protocol is None else protocol.OUTPUT_ROOT)).resolve()
     if not out.is_relative_to(allowed) or out == allowed:
-        raise ValueError('Use an independent run subdirectory under outputs/phase8')
+        raise ValueError('Use an independent run subdirectory under '+str(allowed.relative_to(repository_root())))
     if out in path.resolve().parents or path.resolve() in out.parents or out == path.resolve():
         raise ValueError('Model cache and output directories cannot overlap')
     out.mkdir(parents=True, exist_ok=True)
@@ -87,6 +94,7 @@ def main():
     lock = (out / '.run.lock').open('w'); fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
     source_names = ['experiments/phase8/run.py', 'src/dllm_unmasking/ar_baseline.py', 'src/dllm_unmasking/ar_analysis.py',
                     'src/dllm_unmasking/evaluation.py', 'src/dllm_unmasking/phase2_data.py', 'src/dllm_unmasking/analyze_phase7.py', 'src/dllm_unmasking/layout.py']
+    if protocol is not None:source_names += protocol.SOURCE_NAMES
     manifest = dict(config=cfg, model=model_id, model_revision=pin['revision'], tokenizer_revision=pin['tokenizer_revision'],
                     selection_sha256=digest(cfg['selection_file']), diffusion_sha256=digest(cfg['diffusion_results']),
                     public_selection_sha256=digest(cfg['public_selection']), phase7_provenance_sha256=digest(cfg['phase7_provenance']),
@@ -96,6 +104,10 @@ def main():
                     chat_template=json.loads((path/'tokenizer_config.json').read_text())['chat_template'],
                     source_sha256={n:digest(n) for n in source_names}, n_evaluations=60,
                     comparison='System-level; architecture, training, tokenizer and instruction tuning are confounded')
+    if protocol is not None:
+        manifest['intervention']=protocol.cache_metadata(cfg,pin,path)
+        manifest['comparison']=manifest['intervention']['comparison']
+        manifest['configuration_hash']=object_hash(cfg)
     run_hash = object_hash(manifest); manifest['run_hash'] = run_hash
     saved = out/'manifest.json'
     if saved.exists() and json.loads(saved.read_text()) != manifest:
@@ -107,7 +119,8 @@ def main():
     if not saved.exists():
         atomic_json(saved, manifest)
     records = read_journal(out/'journal.jsonl', questions, run_hash, repair=not args.summarize, model=model_id, revision=pin['revision'], cap=cfg['max_new_tokens'])
-    summarize(out, records, questions, cfg)
+    if protocol is not None:protocol.validate_records(cfg,records)
+    summarize_run(out, records, questions, cfg)
     if args.summarize or len(records) == 60:
         print(f'{len(records)}/60 validated completed evaluations'); return
     os.environ['HF_HUB_OFFLINE']='1'; os.environ['HF_DATASETS_OFFLINE']='1'; os.environ['TRANSFORMERS_OFFLINE']='1'
@@ -127,6 +140,7 @@ def main():
     env_path = out/'environment.json'
     if env_path.exists() and json.loads(env_path.read_text()) != environment:
         raise ValueError('Resume environment differs; use an independent output directory')
+    if protocol is not None:protocol.validate_environment(cfg,environment)
     atomic_json(env_path, environment)
     torch.set_num_threads(4); torch.use_deterministic_algorithms(True)
     torch.backends.cuda.matmul.allow_tf32=False; torch.backends.cudnn.allow_tf32=False
@@ -147,6 +161,7 @@ def main():
             seed = cfg['inference_seed']
             random.seed(seed); torch.manual_seed(seed); torch.cuda.manual_seed_all(seed)
             header = dict(question_id=qid, policy=policy, run_hash=run_hash, model=model_id, model_revision=pin['revision'], max_new_tokens=cfg['max_new_tokens'])
+            if protocol is not None:header.update(protocol.header(cfg))
             append_event(journal, dict(event='started', **header))
             text, encoded = prompt_inputs(tokenizer, q['question'], cfg['prompt_suffix'])
             encoded = {k:v.to('cuda') for k,v in encoded.items()}
@@ -159,9 +174,10 @@ def main():
                           extraction_failed=predicted is None, correct=predicted==gold,
                           eos_token_ids=eos, prompt_tokens=encoded['input_ids'].shape[1], rendered_prompt=text)
             validate_result(result, q, run_hash, model=model_id, revision=pin['revision'], cap=cfg['max_new_tokens'])
+            if protocol is not None:protocol.validate_records(cfg,{qid:result})
             append_event(journal, dict(event='completed', result=result, **header))
-            records[qid] = result; summarize(out, records, questions, cfg)
-            print(f'Phase 8 {policy}: {len(records)}/60 completed; correct={sum(r["correct"] for r in records.values())}/{len(records)}', flush=True)
+            records[qid] = result; summarize_run(out, records, questions, cfg)
+            print(f'{"Phase 8" if protocol is None else "Phase 9"} {policy}: {len(records)}/60 completed; correct={sum(r["correct"] for r in records.values())}/{len(records)}', flush=True)
 
 
 if __name__ == '__main__':

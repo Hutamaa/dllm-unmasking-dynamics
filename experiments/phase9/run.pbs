@@ -1,0 +1,22 @@
+#!/bin/bash
+#PBS -N qwen-concise-p9
+#PBS -q gpu_bwp6000
+#PBS -l select=1:ncpus=4:mem=64gb:ngpus=1
+#PBS -l walltime=04:00:00
+#PBS -j oe
+# Supply your private allocation using qsub -P "$PBS_PROJECT".
+set -eo pipefail
+cd "${PBS_O_WORKDIR:?Submit from the repository root}"
+module load anaconda2025/2025-gpu
+source "$(conda info --base)/etc/profile.d/conda.sh"
+conda activate "${PHASE9_ENV:-${PHASE8_ENV:-dllm-ar-baseline}}"
+: "${HF_HOME:?Reuse the original scratch HF_HOME}"
+: "${PHASE8_HUB_CACHE:?Reuse the original pinned Qwen AR cache}"
+export HF_HOME PHASE8_HUB_CACHE HF_HUB_OFFLINE=1 HF_DATASETS_OFFLINE=1 TRANSFORMERS_OFFLINE=1
+export OMP_NUM_THREADS=4 TOKENIZERS_PARALLELISM=false CUBLAS_WORKSPACE_CONFIG=:4096:8
+config="${PHASE9_CONFIG:-configs/phase9_qwen_concise_256.yaml}"
+mkdir -p outputs/phase9/logs
+exec > >(tee -a "outputs/phase9/logs/job-${PBS_JOBID}.log") 2>&1
+python -c 'import experiments.phase9.run, dllm_unmasking.phase9_protocol, dllm_unmasking.phase9_review, dllm_unmasking.analyze_phase9'
+python -u -m experiments.phase9.run --config "$config" --check-cache
+python -u -m experiments.phase9.run --config "$config"

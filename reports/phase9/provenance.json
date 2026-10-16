@@ -1,0 +1,91 @@
+{
+  "phase": 9,
+  "analysis_version": "finalization-v1",
+  "condition": "concise_essential_steps_v1",
+  "instruction": "Solve this problem using only the essential calculation steps. Be concise, avoid unnecessary explanations, and end with '#### <final numerical answer>'.",
+  "model_revision": "a09a35458c702b33eeacc393d103063234e8bc28",
+  "run_hash": "a3b0b8eac5e3c9016956e8d336834a8f9adbfdc7c2433b86795bb73c23fae89e",
+  "configuration_hash": "1cae6b04d30b97c313a6aed5cac7ecab6f7113a472f47187be75e5712ed9c1d6",
+  "selection_sha256": "5eb7681ca76a0ed61d7fe55296e9cf9a8aacfb8f802971abd9b5894e9992a45c",
+  "input_sha256": {
+    "concise": {
+      "manifest.json": "bbed471fc9503193051902c0422ccc0afb669795879c365a00228883220af91a",
+      "journal.jsonl": "cc06a9ae8bafa0a9afe6bb35262620a94969a84feb45ae4f6b52ceee20809b61",
+      "environment.json": "d4f56a0b1585dbf9e46643ccee9e5d0a734c38d7d8673bfc7065c26ff6e9932a"
+    },
+    "original256": {
+      "manifest.json": "3b993834130ef87a1bb5662c2746649bc0aa4b0838971fd4230caba31a3f930d",
+      "journal.jsonl": "0697d47ca1f4cbc0d028b782d7d741231c1075e347b59d42a7975ea939cb7b76",
+      "environment.json": "d4f56a0b1585dbf9e46643ccee9e5d0a734c38d7d8673bfc7065c26ff6e9932a"
+    },
+    "original512": {
+      "manifest.json": "029b053332677b17084d70be62de3d55e6089e33ac446a15c0fb7a429cd0564a",
+      "journal.jsonl": "ffe7b6bb59d4a440459edff592c757d67f0158984bb57a82d50554949ce72591",
+      "environment.json": "d4f56a0b1585dbf9e46643ccee9e5d0a734c38d7d8673bfc7065c26ff6e9932a"
+    }
+  },
+  "llada_input_sha256": {
+    "manifest.json": "2a9ff1770e0129c12cad410342d05b3e413e0cecbd1d8fba467e8f33c6b5f0f1",
+    "journal.jsonl": "208fc4abfda3cf83e282f54f141560d93cb69d45874a09fcebbc492a778d2a7d"
+  },
+  "tokenizer_sha256": "c0382117ea329cdf097041132f6d735924b697924d6f6fc3945713e96ce87539",
+  "tokenizer_config_sha256": "5b5d4f65d0acd3b2d56a35b56d374a36cbc1c8fa5cf3b3febbbfabf22f359583",
+  "recorded_inference_source_sha256": {
+    "experiments/phase8/run.py": "f3f45da24833ad6bf60f1c5c1fff2e4a9223df84c1c8abf01f2bdaf2653e83f8",
+    "src/dllm_unmasking/ar_baseline.py": "634e3101bcd8b774c53362b5c96d98212276f1090f3f8d1cc57ea0fce458fc60",
+    "src/dllm_unmasking/ar_analysis.py": "8bf5e60e3b699928604a5ad421a888594f3cca3c4f7560c17ee81eddd1c9c257",
+    "src/dllm_unmasking/evaluation.py": "154db29bbca4b53d4101725c0fd5581ad4d0091fc564204f3667e98ffe3196b6",
+    "src/dllm_unmasking/phase2_data.py": "6472086b597d95bb0a1cad6a2ef9c4a88c91112debc5b3c66233538efbb9eb71",
+    "src/dllm_unmasking/analyze_phase7.py": "7d3c34ac62cf7b17e83fd9e0da8a62164741013266ae6dea0517dc879d612984",
+    "src/dllm_unmasking/layout.py": "e70a1b2c4e9c3342126b411c1973fcae5d4fe846772565d0086b7f1bfae7e7b5",
+    "experiments/phase9/run.py": "f76acb34a2dfa2cbaee71747cd2bf84c51590214516a1e0d2f7071c7ac640f66",
+    "src/dllm_unmasking/phase9_protocol.py": "e7dbfdcb07f57707acf1de5cf6cfc0d5dc6697f85cbddfe917bc17dd992edc5c",
+    "src/dllm_unmasking/ar_compare.py": "e94bfb013e25fa86e3008e3b295d8b9dd47bf96f91045c2baaee361fe0bb6c5b"
+  },
+  "inference_source_verification": {
+    "experiments/phase8/run.py": "current source matches recorded hash",
+    "src/dllm_unmasking/ar_baseline.py": "current source matches recorded hash",
+    "src/dllm_unmasking/ar_analysis.py": "current source matches recorded hash",
+    "src/dllm_unmasking/evaluation.py": "current source matches recorded hash",
+    "src/dllm_unmasking/phase2_data.py": "current source matches recorded hash",
+    "src/dllm_unmasking/analyze_phase7.py": "current source matches recorded hash",
+    "src/dllm_unmasking/layout.py": "current source matches recorded hash",
+    "experiments/phase9/run.py": "current source matches recorded hash",
+    "src/dllm_unmasking/phase9_protocol.py": "current source matches recorded hash",
+    "src/dllm_unmasking/ar_compare.py": "current source matches recorded hash"
+  },
+  "analysis_environment": {
+    "python": "3.9.6",
+    "numpy": "2.0.2",
+    "matplotlib": "3.9.4"
+  },
+  "bootstrap": {
+    "seed": 42,
+    "repetitions": 10000,
+    "generator": "NumPy PCG64 reset independently per contrast",
+    "method": "Paired within-stratum resampling at observed stratum sizes; linear percentile 2.5/97.5; pointwise"
+  },
+  "testing_families": {
+    "primary": "One original256 vs concise256 exact two-sided McNemar test",
+    "secondary": "Two comparisons, Holm adjusted separately",
+    "strata": "Three exploratory stratum comparisons, Holm adjusted separately",
+    "parser_sensitivity": "Posthoc diagnostic, not a new benchmark score"
+  },
+  "review": {
+    "seed": 20261015,
+    "n_pairs": 60,
+    "n_rating_rows": 120,
+    "rows_with_any_rating": 0,
+    "reasoning_quality_verified": false,
+    "packet_relative_path": "results/phase9/finalization/review_packet",
+    "unblinding_not_public": true
+  },
+  "annotation_type": "Unblinded assistant-assisted textual evidence audit; not human blinded review",
+  "annotation_sha256": "8082b807f96125b6e4cf6ca6d9fe0a9a2e7afb43297776d247b25f99e45bbda9",
+  "analysis_source_sha256": {
+    "src/dllm_unmasking/finalize_phase9.py": "091e0a21dc4dc07641cafec7e2e381120930d6540743a7d09ae70db54e266007",
+    "src/dllm_unmasking/analyze_phase9.py": "2a210090d37d97d6f5a81f687882c7706be4469837f0d2efe1a3aeb5f18f9745",
+    "src/dllm_unmasking/phase9_review.py": "81c6428d512bebc2816fe8e3985e66159484813099f9d167a795b9a89b4424a9",
+    "src/dllm_unmasking/reasoning_budget.py": "93b3927045db4a001047dd1ecac3e8077311fc1a85fe5c14065c9fa8dba12d3c"
+  }
+}

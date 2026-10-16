@@ -1,0 +1,8 @@
+outcome,n,units,mean_concise_minus_original,bootstrap_low,bootstrap_high,mcnemar_exact_p
+eos_indicator,60,probability_fraction,0.5333333333333333,0.4166666666666667,0.65,4.656612873077393e-10
+marker_indicator,60,probability_fraction,0.43333333333333335,0.3333333333333333,0.5333333333333333,2.9802322387695312e-08
+chars,60,chars,-605.55,-645.3504166666667,-564.5,
+words,60,words,-107.11666666666666,-114.85,-99.1,
+native_generated_tokens,60,native_generated_tokens,-169.66666666666666,-183.36666666666667,-155.29958333333335,
+gpu_prefill_decode_seconds,60,gpu_prefill_decode_seconds,-3.845340042877197,-4.153294903097152,-3.522957659409841,
+generation_wall_seconds,60,generation_wall_seconds,-3.8453600647936885,-4.153316506402334,-3.52297625000511,

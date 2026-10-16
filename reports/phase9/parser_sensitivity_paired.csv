@@ -1,0 +1,2 @@
+a,b,n,both_correct,both_incorrect,b_recovers,b_regresses,b_minus_a_pp,bootstrap_low_pp,bootstrap_high_pp,mcnemar_exact_p,posthoc_not_official
+original last-mention diagnostic,concise last-mention diagnostic,60,24,14,13,9,6.666666666666667,-8.333333333333334,21.666666666666668,0.5234670639038086,True
