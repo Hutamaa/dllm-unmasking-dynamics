@@ -12,6 +12,24 @@ paired analyses, and an explicit record of limitations.
 [Repository map](docs/PROJECT_MAP.md) ·
 [Privacy and validation audit](docs/AUDIT.md)
 
+## v1.0 final results
+
+**[Read the consolidated technical report: Phases 1–9](reports/FINAL_REPORT.md).**
+
+On the matched 60 questions, LLaDA LTR P4/P1 scored **37/60 and 43/60**.
+Qwen original-256/512 scored **28/60 and 50/60**; concise-256 scored **22/60**
+with **11 recoveries and 17 regressions** versus original-256 (−10 pp,
+95% paired interval [−26.7, +6.7], exact McNemar p=0.345). Concise outputs were
+shorter and faster but had 19 empty final-answer placeholders. Numerical accuracy
+is not verified reasoning quality; independent human review remains incomplete.
+
+The initial Phase 1 cohort has 150 different questions. Matched nominal token
+budgets are not matched compute or reasoning budgets, and Qwen prefill+decode
+versus LLaDA decode-only timing prevents validated cross-model dominance claims.
+The report integrates the empirical LLaDA frontier, budget continuation evidence,
+parser effects, uncertainty and limitations. [Release validation](docs/V1_VALIDATION.md)
+documents checks; v1.0 is prepared locally, without a commit, tag or publication.
+
 ## Key findings
 
 On **60 identical GSM8K test questions**, numerical-answer accuracy was:
@@ -141,8 +159,8 @@ environment logs, and credentials are excluded from Git.
 
 ## Limitations
 
-This is one model, one task family, a fixed 256-token budget, and a repeatedly
-inspected 60-question sample. Strategy development and subgroup analyses are
+This studies one primary diffusion model, one primary AR baseline, one task family,
+256/512 nominal output budgets, and a repeatedly inspected 60-question sample. Strategy development and subgroup analyses are
 exploratory. Numerical extraction can reject readable answers or accept invalid
 reasoning. Cross-phase GPU stream intervals include host launch gaps and do not
 measure production throughput, queue wait, or pure kernel time. The observed
@@ -167,7 +185,7 @@ See the [canonical Phase 8 report](reports/phase8/PHASE8_REPORT.md) for paired
 statistics, strata, output diagnostics, figures and reproducibility, and the
 [512 deployment guide](experiments/phase8/QWEN_512.md) for the isolated run setup.
 Public-only statistical verification: `python -m dllm_unmasking.finalize_phase8 --verify-public`.
-No Phase 9 experiment has been started.
+The subsequent concise-instruction intervention is analyzed in the Phase 9 report below.
 
 
 ## Phase 8.5: supplementary reasoning-budget analysis
@@ -175,5 +193,23 @@ No Phase 9 experiment has been started.
 [Reasoning Budget Utilization Analysis](reports/phase8_5/PHASE8_5_REPORT.md)
 examines the existing LLaDA P4 and Qwen-256/512 outputs without new inference.
 Its [validation guide](docs/PHASE8_5_VALIDATION.md) documents reproduction and
-the full local 60-question manual audit. Phase 9 is reserved for a future
-Qwen-256 concise-reasoning intervention; it has not been implemented or run.
+the full local 60-question manual audit. It motivated the later Qwen-256
+concise-reasoning intervention, now completed and analyzed in the
+[Phase 9 report](reports/phase9/PHASE9_REPORT.md).
+
+
+## Phase 9: concise-reasoning intervention
+
+The [completed Phase 9 report](reports/phase9/PHASE9_REPORT.md) tests one fixed
+concise instruction on the same 60 questions. Qwen concise-256 scores **22/60**
+versus original-256 **28/60**, with **11 recoveries and 17 regressions**. The paired
+accuracy change is **−10.0 percentage points** (95% interval **−26.7 to +6.7**;
+exact McNemar **p=0.345**), so a general accuracy loss or equivalence is unproven.
+
+Mean recorded GPU prefill+decode time falls from **5.3244 s to 1.4791 s**;
+generated tokens fall from **235.13 to 65.47**. All concise outputs reach EOS,
+but **19/60 have empty final-answer placeholders**. Textual arithmetic/constraint
+errors coexist with parser effects; shorter text alone is not evidence of worse
+reasoning. The [protocol guide](experiments/phase9/README.md) preserves the original
+instruction and reproduction commands. A full blinded paired review packet is
+available locally; human reasoning-quality conclusions remain unverified.
